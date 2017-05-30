@@ -13,8 +13,12 @@
 
 Route::get('/', function () { return view('welcome'); });
 
-Route::get('/dkp', function () {
-    $dkp = DB::table('newdkp_raids')-get();
-
-    return view('welcome');
+Route::get('/rlp', 'DkpController@index');
+Route::get('/rlp/upload', function () { 
+	echo Form::open(array('url' => '/rlp/upload','files'=>'true'));
+         echo 'Select the file to upload.';
+         echo Form::file('raidlog');
+         echo Form::submit('Upload File');
+         echo Form::close();	
 });
+Route::post('/rlp/upload', 'DkpController@upload');
