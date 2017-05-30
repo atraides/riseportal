@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $dkp = DB::table('newdkp_raids')-get();
+
+    return $dkp;
 });
