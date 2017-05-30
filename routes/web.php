@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () { return view('welcome'); });
+
+Route::get('/dkp', function () {
     $dkp = DB::table('newdkp_raids')-get();
 
-    return $dkp;
+    return view('welcome');
 });
