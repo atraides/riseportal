@@ -39,6 +39,7 @@ return [
     'client_id' => env('BATTLENET_KEY'),
     'client_secret' => env('BATTLENET_SECRET'),
     'redirect' => env('BATTLENET_REDIRECT_URI'),  
+    'region' => env('BATTLENET_REGION'),
     ], 
 
 ];
