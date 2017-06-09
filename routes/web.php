@@ -22,3 +22,7 @@ Route::get('/rlp/upload', function () {
          echo Form::close();	
 });
 Route::post('/rlp/upload', 'DkpController@upload');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
