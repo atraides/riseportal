@@ -11,6 +11,12 @@
 |
 */
 
+Auth::routes();
+Route::get('oauth/bnet', 'Auth\LoginController@redirectToProvider');
+Route::get('oauth/bnet/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/', function () { return view('welcome'); });
 
 Route::get('/rlp', 'DkpController@index');
@@ -22,11 +28,3 @@ Route::get('/rlp/upload', function () {
          echo Form::close();	
 });
 Route::post('/rlp/upload', 'DkpController@upload');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
