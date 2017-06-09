@@ -4,13 +4,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
+                <ul>
+                @foreach ( $characters as $character ) 
+                    @foreach ( $character as $chardata )
+                        <li class="{{ $chardata->class }}">@if ($chardata->lastModified > 0) 
+                        <img src="https://render-eu.worldofwarcraft.com/character/{{ $chardata->thumbnail }}"/>
+                        @endif
+                        {{ $chardata->name }}-{{ $chardata->realm}} @ {{ $chardata->level }}</li>
+                    @endforeach
+                @endforeach
+                </ul>
         </div>
     </div>
 </div>

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\BattleNetAuth;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -28,6 +30,6 @@ class User extends Authenticatable
     ];
 
     public function bnet() {
-        return $this->hasOne(BattleNetAuth::class);
+        return $this->hasMany(BattleNetAuth::class);
     }
 }

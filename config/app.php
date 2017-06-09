@@ -184,6 +184,7 @@ return [
 
         // Laravel\Socialite\SocialiteServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
+        Xklusive\BattlenetApi\BattlenetApiServiceProvider::class,
 
         ],
 
