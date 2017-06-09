@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateBattleNetAuthsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('battle_net_auths', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->uniq;
-            $table->string('email')->nullable();
-            $table->string('password', 60)->nullable();
-            $table->string('provider');
-            $table->string('provider_id');
-            $table->rememberToken();
+            $table->unsignedInteger('user_id');
+            $table->string('access_token');
+            $table->unsignedInteger('expires');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('battle_net_auths');
     }
 }

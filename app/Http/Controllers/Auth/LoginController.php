@@ -35,23 +35,6 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
-    }
-
-    public function redirectToProvider()
-    {
-        return Socialite::with('battlenet')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleProviderCallback()
-    {
-        $user = Socialite::with('battlenet')->user();
-
-        print_r($user);
+        $this->middleware('guest');
     }
 }
