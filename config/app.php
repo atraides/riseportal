@@ -182,7 +182,9 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         'Nathanmac\Utilities\Parser\ParserServiceProvider',
 
-        Laravel\Socialite\SocialiteServiceProvider::class,
+        // Laravel\Socialite\SocialiteServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
+
         ],
 
     /*
