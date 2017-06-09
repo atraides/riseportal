@@ -12,8 +12,8 @@
 */
 
 Auth::routes();
-Route::get('oauth/bnet', 'Auth\LoginController@redirectToProvider');
-Route::get('oauth/bnet/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('oauth/battlenet', 'Auth\LoginController@redirectToProvider')->name('bnetauth');
+Route::get('oauth/battlenet/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
