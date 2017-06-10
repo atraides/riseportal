@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Xklusive\BattlenetApi\Services\WowService;
 use App\Member;
 
-class RiseCommand extends Command
+class RiseRosterUpdate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'roster:update';
+    protected $signature = 'rise:roster:update';
 
     /**
      * The console command description.

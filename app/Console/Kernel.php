@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\RiseCommand::class
+        Commands\RiseRosterUpdate::class,
+        Commands\RiseCharacterUpdate::class
     ];
 
     /**
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('roster:update')
+        $schedule->command('rise:roster:update')
                  ->twiceDaily(1, 13);
     }
 

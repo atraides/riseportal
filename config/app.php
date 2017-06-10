@@ -179,6 +179,7 @@ return [
 
         // Other service providers
         Barryvdh\Debugbar\ServiceProvider::class,
+        GuzzleHttp\Profiling\Debugbar\Support\Laravel\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         'Nathanmac\Utilities\Parser\ParserServiceProvider',
 
@@ -238,6 +239,7 @@ return [
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,
     'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 

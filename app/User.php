@@ -28,6 +28,13 @@ class User extends Authenticatable
     ];
 
     public function bnet() {
-        return $this->hasMany(BattleNetAuth::class);
+        return $this->hasOne(BattleNetAuth::class);
+    }
+
+    public function updateToken($token = null) {
+        if (!is_null($token) && $token != $this->bnet->access_token) {
+            $this->bnet->access_token = $token;
+            $this->bnet->save();
+        }
     }
 }

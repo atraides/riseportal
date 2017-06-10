@@ -7,6 +7,8 @@ use Auth;
 use App\User;
 use App\BattleNetAuth;
 
+use Carbon\Carbon;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
@@ -64,6 +66,7 @@ class BattleNetController extends Controller
     {
         $authUser = User::where('provider_id', $oauth->id)->first();
         if ($authUser) {
+            $authUser->updateToken($oauth->token);
             return $authUser;
         }
         $user = User::create([
@@ -75,14 +78,7 @@ class BattleNetController extends Controller
 
         return $user->bnet()->create([
             'access_token'  => $oauth->token,
-            'expires'       => $oauth->expiresIn
+            'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp
             ]);
-    }
-
-    public function updateUserToken($oauth, $provider)
-    {
-        $authUser = User::where('provider_id', $oauth->id)->first();
-        $authUser->bnet()->access_token = $oauth->token;
-        dd($authUser);
     }
 }

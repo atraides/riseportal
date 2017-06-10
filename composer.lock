@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "850d05e3a6f9a7e4d34b25dbecdc97e0",
+    "content-hash": "9ca0cecc05d899deb997fee576ac4ff7",
     "packages": [
         {
             "name": "atraides/laravel-battlenet-api",
@@ -451,6 +451,114 @@
                 "url"
             ],
             "time": "2017-03-20T17:10:46+00:00"
+        },
+        {
+            "name": "hannesvdvreken/guzzle-debugbar",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hannesvdvreken/guzzle-debugbar.git",
+                "reference": "fc43eec28869b1300a48441fc58dd158d4ed6d39"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hannesvdvreken/guzzle-debugbar/zipball/fc43eec28869b1300a48441fc58dd158d4ed6d39",
+                "reference": "fc43eec28869b1300a48441fc58dd158d4ed6d39",
+                "shasum": ""
+            },
+            "require": {
+                "hannesvdvreken/guzzle-profiler": "^1.0",
+                "maximebf/debugbar": "^1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "^1.10",
+                "illuminate/support": "~4|~5",
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Profiling\\Debugbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                },
+                {
+                    "name": "Hannes Van De Vreken",
+                    "email": "vandevreken.hannes@gmail.com"
+                }
+            ],
+            "description": "A Guzzle middleware that logs requests to debugbar's timeline",
+            "keywords": [
+                "Guzzle",
+                "debugbar",
+                "http",
+                "log",
+                "middleware",
+                "php",
+                "profiler",
+                "profiling"
+            ],
+            "time": "2017-04-03T10:24:31+00:00"
+        },
+        {
+            "name": "hannesvdvreken/guzzle-profiler",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hannesvdvreken/guzzle-profiler.git",
+                "reference": "b08bfb5c5ad07fb6bee910af34d54cf37199b2b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hannesvdvreken/guzzle-profiler/zipball/b08bfb5c5ad07fb6bee910af34d54cf37199b2b3",
+                "reference": "b08bfb5c5ad07fb6bee910af34d54cf37199b2b3",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "^1.10",
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Profiling\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hannes Van De Vreken",
+                    "email": "vandevreken.hannes@gmail.com"
+                }
+            ],
+            "description": "A Guzzle middleware that profiles requests made by the client.",
+            "keywords": [
+                "Guzzle",
+                "debug",
+                "http",
+                "log",
+                "middleware",
+                "profiler",
+                "profiling",
+                "timeline"
+            ],
+            "time": "2015-11-25T10:07:26+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
