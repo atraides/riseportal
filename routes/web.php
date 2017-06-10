@@ -1,5 +1,6 @@
 <?php
 
+use Xklusive\BattlenetApi\Services\WowService;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,9 @@ Route::get('oauth/{provider}/callback', 'Auth\BattleNetController@handleProvider
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () { return view('welcome'); });
+
+Route::get('/guild', 'GuildController@show');
+Route::get('/character/list', 'CharacterController@list');
 
 Route::get('/rlp', 'DkpController@index');
 Route::get('/rlp/upload', function () { 

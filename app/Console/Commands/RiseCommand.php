@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Xklusive\BattlenetApi\Services\WowService;
+use App\Member;
 
 class RiseCommand extends Command
 {
@@ -11,14 +13,14 @@ class RiseCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'roster:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Update the guild roster from Battle.net';
 
     /**
      * Create a new command instance.
@@ -35,8 +37,22 @@ class RiseCommand extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(WowService $wow)
     {
-        //
+        $guild = $wow->getGuildMembers('Arathor', 'Rise Legacy');
+
+        $bar = $this->output->createProgressBar(count($guild->all()['members']));
+
+        foreach ($guild->all()['members'] as $member) {
+            
+            $m = Member::firstOrNew(array('name' => $member->character->name));
+            $m->rank = $member->rank;
+            $m->realm = $member->character->realm;
+            $m->save();
+
+            $bar->advance();
+        }
+
+        $bar->finish();
     }
 }
