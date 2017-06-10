@@ -21,16 +21,16 @@ class BattleNetController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        // $this->middleware('guest')->except(['logout']);
     }
 
     public function redirectToProvider($provider)
     {
-        return Socialite::with($provider)->redirect();
+        return Socialite::with($provider)->scopes(['wow.profile', 'sc2.profile'])->redirect();
     }
 
     /**
@@ -41,8 +41,14 @@ class BattleNetController extends Controller
     public function handleProviderCallback($provider)
     {
         $oauth = Socialite::with($provider)->user();
-        $authUser = $this->findOrCreateUser($oauth, $provider);
-        Auth::login($authUser, true);
+
+        // if (Auth::check()) {
+        //     $authUser = $this->updateUserToken($oauth, $provider);
+        // } else {
+           $authUser = $this->findOrCreateUser($oauth, $provider);
+            Auth::login($authUser, true);
+         
+        // }
         return redirect($this->redirectTo);
     }
 
@@ -71,5 +77,12 @@ class BattleNetController extends Controller
             'access_token'  => $oauth->token,
             'expires'       => $oauth->expiresIn
             ]);
+    }
+
+    public function updateUserToken($oauth, $provider)
+    {
+        $authUser = User::where('provider_id', $oauth->id)->first();
+        $authUser->bnet()->access_token = $oauth->token;
+        dd($authUser);
     }
 }

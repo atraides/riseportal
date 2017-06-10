@@ -8,7 +8,7 @@
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
                     <div class="text-center">
-                        <a href="{{ route('bnetauth') }}" class="btn btn-primary">Register with Battle.net</a>
+                        <a href="{{ url('/oauth/battlenet') }}" class="btn btn-primary">Register with Battle.net</a>
                     </div>
                 </div>
             </div>

@@ -1,22 +1,162 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/css?family=Material%20Icons);
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("../../../public/fonts/blizzard/blizzard.woff") format('woff');
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("../../../public/fonts/blizzard/blizzard-bold.woff") format('woff');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("../../../public/fonts/blizzard/blizzard-italic.woff") format('woff');
+    font-style: italic;
+}
 
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+body {
+	    font-family: Blizzard;
+	    background-color: $body-bg;
+}
 
-		.deathknight { color: #c41f3b; }
-		.demonhunter { color: #a330c9; }
-		.druid { color: #ff7d0a; }
-		.hunter { color: #abd473; }
-		.mage  { color: #69ccf0; }
-		.monk  { color: #00ff96; }
-		.paladin  { color: #f58cba; }
-		.priest   { color: #ffffff; }
-		.rogue    { color: #fff569; }
-		.shaman   { color: #0070de; }
-		.warlock  { color: #9482c9; }
-		.warrior  { color: #c79c6e; }
+.deathknight { color: #c41f3b; }
+.demonhunter { color: #a330c9; }
+.druid { color: #ff7d0a; }
+.hunter { color: #abd473; }
+.mage  { color: #69ccf0; }
+.monk  { color: #00ff96; }
+.paladin  { color: #f58cba; }
+.priest   { color: #ffffff; }
+.rogue    { color: #fff569; }
+.shaman   { color: #0070de; }
+.warlock  { color: #9482c9; }
+.warrior  { color: #c79c6e; }
+
+.Author-name:hover, a {
+    text-decoration: none;
+}
+
+.Author-name--profileLink {
+    color: #fff!important;
+}
+
+.Author-name {
+    color: #fff;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+.Author-block {
+	box-sizing: border-box;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    font-family: Blizzard, sans-serif;
+    font-size: 17px;
+    height: 112px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    width: 280px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.Author {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.Author-avatar {
+    background-size: cover;
+    border: 1px solid #000;
+    position: relative;
+    height: 66px;
+    width: 66px;
+    @media only screen and (min-width: 641px) {
+    	height: 82px;
+    	width: 82px;
+    }
+    background-image: url(https://eu.battle.net/forums/static/images/avatars/wow/avatar-wow-default.png);
+}
+
+.Author-avatar img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.Author-details {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.Author-achievements, .Author-class, .Author-guild {
+    font-size: .8125rem;
+    margin-top: 4px;
+    word-break: break-word;
+}
+
+*, :after, :before {
+    box-sizing: inherit;
+}
+
+.Author-achievements--link, .Author-guild--link {
+    color: rgba(255,255,255,.7)!important;
+}
+
+.Author-achievements--link .Icon, .Author-achievements--link .Navbar-modalContent .menu-content .menu-item .Icon-profileLink, .Author-achievements--link .User-menu .Icon-profileLink, .Author-guild--link .Icon, .Author-guild--link .Navbar-modalContent .menu-content .menu-item .Icon-profileLink, .Author-guild--link .User-menu .Icon-profileLink {
+    background-image: url(https://eu.battle.net/forums/static/images/icons/achievements.png);
+    height: 10px;
+    margin-right: 4px;
+    width: 8px;
+}
+
+div {
+    display: block;
+}
+
+.Author-avatar img {
+    height: 64px;
+    width: 64px;
+    @media only screen and (min-width: 641px) {
+    	height: 80px;
+    	width: 80px;
+    }
+}
+
+.Icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.bi_battlenet {
+    background: url(/storage/icons/bnet.png) no-repeat 2px center;
+    display: inline-block;
+    vertical-align: middle;
+    width: 120px;
+    text-align: center;
+    margin-right: 3px;
+    margin-left: 10px;
+}
+
+.btn-battlenet {
+    background-color: #0e98d8 !important;
+    color: #fff;
+}

@@ -7,9 +7,9 @@ use Carbon\Carbon;
 
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
+
 use Xklusive\BattlenetApi\Services\WowService;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -30,23 +30,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $client = new Client();
-        $res = $client->request('GET', 'https://eu.api.battle.net/wow/user/characters?access_token='.Auth::user()->bnet->first()->access_token);
-        /*$res = $client->request('GET', 'https://eu.api.battle.net/wow/auction/data/arathor?locale=en_GB&apikey=zm995q6pq362g72vt3nm7pk8sfwmsaeq');*/
+    public function index(WowService $wow) {
+        try {
+            $res = $wow->getProfileCharacters();
 
-        if ($res->getStatusCode() == 403) {
-            /*Re authenticate*/
-        } elseif ($res->getStatusCode() == 200) {
-          $characters = json_decode($res->getBody());
+            $characters = json_decode($res);
 
-          $this->deleteOldCharacters($characters);
-          $this->classTransformation($characters);
+            $this->deleteOldCharacters($characters);
+            $this->classTransformation($characters);
+            $this->raceTransformation($characters);
 
-        return view('home', compact('characters'));
-      }
-  }
+            return view('home', compact('characters'));
+        } catch (\Exception $e) {
+            if ($e->getResponse()->getStatusCode() == 401) {
+                return redirect('/oauth/battlenet');
+            }
+        }
+    }
 
   private function deleteOldCharacters($obj) {
     foreach ( $obj->characters as $id => $character) {
@@ -56,21 +56,38 @@ class HomeController extends Controller
     }
   }
 
-  private function classTransformation($array) {
-    foreach ( $array->characters as $character) {
+  private function classTransformation($obj) {
+    foreach ( $obj->characters as $character) {
         switch ($character->class) {
-            case 1: $character->class = 'warrior'; break;
-            case 2: $character->class = 'paladin'; break;
-            case 3: $character->class = 'hunter';  break;
-            case 4: $character->class = 'rogue'; break;
-            case 5: $character->class = 'priest'; break;
-            case 6: $character->class = 'deathknight'; break;
-            case 7: $character->class = 'shaman'; break;
-            case 8: $character->class = 'mage'; break;
-            case 9: $character->class = 'warlock'; break;
-            case 10: $character->class = 'monk'; break;
-            case 11: $character->class = 'druid'; break;
-            case 12: $character->class = 'demonhunter'; break;
+            case 1: $character->class = 'Warrior'; $character->cssClass = 'warrior'; break;
+            case 2: $character->class = 'Paladin'; $character->cssClass = 'paladin'; break;
+            case 3: $character->class = 'Hunter'; $character->cssClass = 'hunter';  break;
+            case 4: $character->class = 'Rogue'; $character->cssClass = 'rogue'; break;
+            case 5: $character->class = 'Priest'; $character->cssClass = 'priest'; break;
+            case 6: $character->class = 'Death Knight'; $character->cssClass = 'deathknight'; break;
+            case 7: $character->class = 'Shaman'; $character->cssClass = 'shaman'; break;
+            case 8: $character->class = 'Mage'; $character->cssClass = 'mage'; break;
+            case 9: $character->class = 'Warlock'; $character->cssClass = 'warlock'; break;
+            case 10: $character->class = 'Monk'; $character->cssClass = 'monk'; break;
+            case 11: $character->class = 'Druid'; $character->cssClass = 'druid'; break;
+            case 12: $character->class = 'Demon Hunter'; $character->cssClass = 'demonhunter'; break;
+        }
+    }
+  }
+
+  private function raceTransformation($obj) {
+    foreach ( $obj->characters as $character) {
+        switch ($character->race) {
+			case 1: $character->race = 'Human'; break;
+			case 2: $character->race = 'Orc'; break;
+			case 3: $character->race = 'Dwarf'; break;
+			case 4: $character->race = 'Nightelf'; break;
+			case 5: $character->race = 'Undead'; break;
+			case 6: $character->race = 'Tauren'; break;
+			case 7: $character->race = 'Gnome'; break;
+			case 8: $character->race = 'Troll'; break;
+			case 10: $character->race = 'Bloodelf'; break;
+			case 11: $character->race = 'Draenei'; break;
         }
     }
   }
