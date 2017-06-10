@@ -42,30 +42,26 @@ class RiseCharacterUpdate extends Command
     {
         $users = User::all();
 
-        // $bar = $this->output->createProgressBar(count($user->all()));
-
         foreach ($users as $user) {
-            foreach ($wow->getProfileCharacters([], $user->bnet->first()->access_token)->characters as $character) {
-                print_r($character);
-                // $this->info($character->name.'@'.$user->name);
+            $characters = $wow->getProfileCharacters([], $user->bnet->access_token, $user->id)->first();
+            $this->info($user->name);
+            $bar = $this->output->createProgressBar(count($characters));
+            $bar->setBarWidth(100);
+            foreach ( $characters as $character ) {
+                $m = $user->characters()->firstOrNew(array('name' => $character->name));
+                $m->realm = $character->realm;
+                $m->battlegroup = $character->battlegroup;
+                $m->class = $character->class;
+                $m->race = $character->race;
+                $m->gender = $character->gender;
+                $m->level = $character->level;
+                $m->achievementPoints = $character->achievementPoints;
+                $m->thumbnail = $character->thumbnail;
+                $m->lastModified = ((int)$character->lastModified / 1000);
+                $m->save();
+                $bar->advance();
             }
-            
-/*            $m = Character::firstOrNew(array('name' => $member->character->name));
-            $m->realm
-            $m->battlegroup
-            $m->class = $member->character->class;
-            $m->race = $member->character->race;
-            $m->gender = $member->character->
-            $m->level = $member->character->
-            $m->achievementPoints = $member->character->
-            $m->thumbnail
-            $m->lastModified = $member->character->
-            $m->save();*/
-
-            // $bar->advance();
+            $bar->finish();    
         }
-
-        // $bar->finish();
-
     }
 }

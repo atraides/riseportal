@@ -52,9 +52,9 @@ class CharacterController extends Controller
         $users = User::all();
 
         foreach ($users as $user) {
-            print "<br/>".$user->name."<br/>";
-            foreach ($wow->getProfileCharacters([], $user->bnet->first()->access_token, $user->id)->first() as $character) {
-             print_r($character->name);
+            $characters = $wow->getProfileCharacters([], $user->bnet->access_token, $user->id)->first();
+            foreach ( $characters as $character ) {
+                print_r($character->name);
             }
             
 /*            $m = Character::firstOrNew(array('name' => $member->character->name));

@@ -21,6 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function () { return view('welcome'); });
 
 Route::get('/guild', 'GuildController@show');
+Route::get('/guild/roster', 'GuildController@show');
 Route::get('/character/list', 'CharacterController@list');
 
 Route::get('/rlp', 'DkpController@index');

@@ -31,6 +31,10 @@ class User extends Authenticatable
         return $this->hasOne(BattleNetAuth::class);
     }
 
+    public function characters() {
+        return $this->hasMany(Character::class);
+    }
+
     public function updateToken($token = null) {
         if (!is_null($token) && $token != $this->bnet->access_token) {
             $this->bnet->access_token = $token;
