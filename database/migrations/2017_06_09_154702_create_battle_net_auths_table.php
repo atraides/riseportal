@@ -17,6 +17,7 @@ class CreateBattleNetAuthsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('access_token');
+            $table->string('scope')->nullable();
             $table->unsignedInteger('expires');
             $table->rememberToken();
             $table->timestamps();

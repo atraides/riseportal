@@ -41,12 +41,17 @@ class RiseCharacterUpdate extends Command
     public function handle(WoWService $wow)
     {
         $users = User::all();
+        $cacheOld = config('battlenet-api.cache');
+        config(['battlenet-api.cache' => false]);
 
+        $bar = $this->output->createProgressBar(count($users));
+        $bar->setFormat('<fg=green>%message:20s%:</> %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%');
+        $bar->setBarWidth(100);
+ 
         foreach ($users as $user) {
             $characters = $wow->getProfileCharacters([], $user->bnet->access_token, $user->id)->first();
-            $this->info($user->name);
-            $bar = $this->output->createProgressBar(count($characters));
-            $bar->setBarWidth(100);
+            $bar->setMessage($user->name);
+
             foreach ( $characters as $character ) {
                 $m = $user->characters()->firstOrNew(array('name' => $character->name));
                 $m->realm = $character->realm;
@@ -59,9 +64,11 @@ class RiseCharacterUpdate extends Command
                 $m->thumbnail = $character->thumbnail;
                 $m->lastModified = ((int)$character->lastModified / 1000);
                 $m->save();
-                $bar->advance();
             }
-            $bar->finish();    
+            $bar->advance();
         }
+        $bar->finish(); 
+
+        config(['battlenet-api.cache' => $cacheOld ?: true]);
     }
 }

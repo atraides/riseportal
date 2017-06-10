@@ -69,6 +69,7 @@ class BattleNetController extends Controller
             $authUser->updateToken($oauth->token);
             return $authUser;
         }
+        
         $user = User::create([
             'name'     => $oauth->nickname,
             'email'    => $oauth->email,
@@ -78,7 +79,8 @@ class BattleNetController extends Controller
 
         return $user->bnet()->create([
             'access_token'  => $oauth->token,
-            'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp
+            'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp,
+            'scope'         => $oauth->accessTokenResponseBody['scope']
             ]);
     }
 }

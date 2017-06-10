@@ -9,7 +9,7 @@ class BattleNetAuth extends Authenticatable
 {
 
 	protected $fillable = [
-        'access_token', 'expires',
+        'access_token', 'expires', 'scope'
     ];
 
     public function users() {
