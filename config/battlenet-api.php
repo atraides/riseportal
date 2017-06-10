@@ -59,6 +59,6 @@ return [
         | This value is in minutes.
         |
         */
-        'cache_duration' => 600,
+        'cache_duration' => 300,
 
 ];
