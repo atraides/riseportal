@@ -72,6 +72,7 @@ class HomeController extends Controller
           case 10: $character->race = 'Bloodelf'; break;
           case 11: $character->race = 'Draenei'; break;
           case 22: $character->race = 'Worgen'; break;
+          case 25: $character->race = 'Pandaren'; break;
         }
 
         $character->rank = $character->getGuildRank();

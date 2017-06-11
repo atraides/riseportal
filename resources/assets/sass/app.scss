@@ -45,6 +45,17 @@ nav.officer {
     background-color: #0e242d !important;
 }
 
+.brand-logo img {
+    height: 35px;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+nav img#postingAs {
+    height: 55px;
+    border: 1px solid #000;
+    vertical-align: middle;
+}
+
 .Author-name:hover, a {
     text-decoration: none;
 }
@@ -202,4 +213,33 @@ body {
 
 .row {
     border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.Dropdown-divider {
+    background: rgba(255,255,255,.1);
+    cursor: default;
+    height: 1px !important;
+    margin: .2rem 0;
+    padding: 0;
+    width: 100%;
+}
+
+.Characters .Author {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+}
+
+.Characters .main, .Characters .main:hover {
+    background-color: rgba(35,194,255,.1);
+    border-color: rgba(35,194,255,.5);
+}
+
+.Characters .Author:hover {
+    background-color: rgba(29, 34, 44, 0.63);
+    border-color: rgba(84, 84, 84, 0.8);
 }

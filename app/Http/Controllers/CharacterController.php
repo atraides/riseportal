@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Character;
+
 use Illuminate\Http\Request;
 use Xklusive\BattlenetApi\Services\RiseService;
 
@@ -48,6 +49,25 @@ class CharacterController extends Controller
     public function list(User $user, RiseService $wow)
     {
         return $wow->getProfileCharacters([], $user->bnet->access_token, $user->id);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function setMain(Character $character)
+    {
+        $oldMain = Character::where('main', true);
+        $oldMain->get()->each(function ($om, $id) {
+            $om->main = false;
+            $om->save();
+        });
+
+        $character->main = true;
+        $character->save();
+
+        return back();
     }
 
     /**
