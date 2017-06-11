@@ -27,9 +27,9 @@
                     {{ csrf_field() }}
                 </form>
             </ul>
-           <nav>
+           <nav @if (Auth::check()) class="{{ auth()->user()->getGuildRank(1) }}" @endif>
             <div class="nav-wrapper">
-              <a href="#" class="brand-logo">{{ config('app.name', 'Laravel') }}</a>
+              <a href="#" class="brand-logo"><img src="/storage/images/rise-ico-60.png"/></a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
               <!-- Authentication Links -->
                         @if (Auth::guest())
@@ -39,7 +39,10 @@
                         @else
                             <!-- Dropdown Trigger -->
                             <li>
-                                <a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a>
+                                <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                                    <img src="https://render-eu.worldofwarcraft.com/character/{{ Auth::user()->getMainCharacter()->thumbnail }}" />
+                                    <i class="material-icons right">arrow_drop_down</i>
+                                </a>
                             </li>
                         @endif
               </ul>

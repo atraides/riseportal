@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Character;
 use Illuminate\Http\Request;
-use Xklusive\BattlenetApi\Services\WowService;
+use Xklusive\BattlenetApi\Services\RiseService;
 
 class CharacterController extends Controller
 {
@@ -45,32 +45,9 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(WoWService $wow)
+    public function list(User $user, RiseService $wow)
     {
-        // return $wow->getProfileCharacters();
-
-        $users = User::all();
-
-        foreach ($users as $user) {
-            $characters = $wow->getProfileCharacters([], $user->bnet->access_token, $user->id)->first();
-            foreach ( $characters as $character ) {
-                print_r($character->name);
-            }
-            
-/*            $m = Character::firstOrNew(array('name' => $member->character->name));
-            $m->realm
-            $m->battlegroup
-            $m->class = $member->character->class;
-            $m->race = $member->character->race;
-            $m->gender = $member->character->
-            $m->level = $member->character->
-            $m->achievementPoints = $member->character->
-            $m->thumbnail
-            $m->lastModified = $member->character->
-            $m->save();*/
-
-            // $bar->advance();
-        }
+        return $wow->getProfileCharacters([], $user->bnet->access_token, $user->id);
     }
 
     /**

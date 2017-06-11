@@ -47,7 +47,7 @@ class RiseRosterUpdate extends Command
         $activeMembers = array();
 
         $bar = $this->output->createProgressBar(count($guild->all()['members']));
-        $bar->setFormat('<fg=green>%message:-20s%:</> %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%');
+        $bar->setFormat('<fg=green>%message:-20s%:</> [%bar%] %current%/%max% %percent:3s%% %elapsed:6s%');
         $bar->setBarWidth(100);
 
         foreach ($guild->all()['members'] as $member) {

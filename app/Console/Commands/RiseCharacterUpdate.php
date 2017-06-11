@@ -3,12 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Xklusive\BattlenetApi\Services\WowService;
+use Xklusive\BattlenetApi\Services\RiseService;
 use App\User;
 use App\Character;
 
+use App\CharacterUpdates;
+
 class RiseCharacterUpdate extends Command
 {
+
+    use CharacterUpdates;
     /**
      * The name and signature of the console command.
      *
@@ -38,33 +42,20 @@ class RiseCharacterUpdate extends Command
      *
      * @return mixed
      */
-    public function handle(WoWService $wow)
+    public function handle(RiseService $wow)
     {
         $users = User::all();
         $cacheOld = config('battlenet-api.cache');
         config(['battlenet-api.cache' => false]);
 
         $bar = $this->output->createProgressBar(count($users));
-        $bar->setFormat('<fg=green>%message:20s%:</> %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%');
+        $bar->setFormat('<fg=green>%message:-20s%:</> [%bar%] %current%/%max% %percent:3s%% %elapsed:6s%');
         $bar->setBarWidth(100);
  
         foreach ($users as $user) {
-            $characters = $wow->getProfileCharacters([], $user->bnet->access_token, $user->id)->first();
+            
             $bar->setMessage($user->name);
-
-            foreach ( $characters as $character ) {
-                $m = $user->characters()->firstOrNew(array('name' => $character->name));
-                $m->realm = $character->realm;
-                $m->battlegroup = $character->battlegroup;
-                $m->class = $character->class;
-                $m->race = $character->race;
-                $m->gender = $character->gender;
-                $m->level = $character->level;
-                $m->achievementPoints = $character->achievementPoints;
-                $m->thumbnail = $character->thumbnail;
-                $m->lastModified = ((int)$character->lastModified / 1000);
-                $m->save();
-            }
+            $wow->getProfileCharacters([], $user->bnet->access_token, $user->id);
             $bar->advance();
         }
         $bar->finish(); 

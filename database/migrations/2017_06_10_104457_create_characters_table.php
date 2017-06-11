@@ -18,6 +18,7 @@ class CreateCharactersTable extends Migration
             $table->unsignedInteger('user_id');
             $table->string('name');
             $table->string('realm');
+            $table->string('guild')->nullable();
 			$table->string('battlegroup');
 			$table->unsignedInteger('class');
 			$table->unsignedInteger('race');
@@ -26,6 +27,7 @@ class CreateCharactersTable extends Migration
 			$table->unsignedInteger('achievementPoints');
 			$table->string('thumbnail');
 			$table->unsignedInteger('lastModified');
+            $table->boolean('main')->nullable();
             $table->timestamps();
         });
     }
