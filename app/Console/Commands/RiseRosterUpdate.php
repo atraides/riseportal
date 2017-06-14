@@ -3,8 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Xklusive\BattlenetApi\Services\WowService;
-use App\Member;
+use Xklusive\BattlenetApi\Services\RiseService;
+use App\User;
+use App\Character;
 
 class RiseRosterUpdate extends Command
 {
@@ -37,29 +38,37 @@ class RiseRosterUpdate extends Command
      *
      * @return mixed
      */
-    public function handle(WowService $wow)
+    public function handle(RiseService $wow)
     {
+        $dummyUser = User::where('name','RiseGuild')->first();
+
         $cacheOld = config('battlenet-api.cache');
         config(['battlenet-api.cache' => false]);
         $guild = $wow->getGuildMembers('Arathor', 'Rise Legacy');
         config(['battlenet-api.cache' => $cacheOld ?: true]);
 
-        $activeMembers = array();
+         // We only select characters belonging to the Dummy account because these are the orphans.
+        $characters = Character::with('user')->get();
 
-        $bar = $this->output->createProgressBar(count($guild->all()['members']));
-        $bar->setFormat('<fg=green>%message:-20s%:</> [%bar%] %current%/%max% %percent:3s%% %elapsed:6s%');
+        $bar = $this->output->createProgressBar(count($guild->get('members')));
+        $bar->setFormat('<fg=green>%message:-30s%:</> [%bar%] %current%/%max% %percent:3s%% %elapsed:6s%');
         $bar->setBarWidth(100);
 
-        foreach ($guild->all()['members'] as $member) {
+        foreach ($guild->get('members') as $member) {
+            $member->character->lastModified = (int) $member->character->lastModified / 1000;
+            $bar->setMessage($member->character->name.'@'.$member->character->realm);
+            $character = $characters->where('name', $member->character->name)->where('realm', $member->character->realm);
 
-            $bar->setMessage($member->character->name);
-
-            array_push( $activeMembers, $member->character->name );
-
-            $m = Member::firstOrNew(array('name' => $member->character->name));
-            $m->rank = $member->rank;
-            $m->realm = $member->character->realm;
-            $m->save();
+            if ($character->isEmpty()) {
+                // Add a new character to the roster
+                $member->character->rank = $member->rank;
+                $q = $dummyUser->characters()->create((array) $member->character);
+            } else if ($character->first()->user->id == 1) {
+                // Character belongs to the Dummy account, lets update it.
+                $character->first()->update((array) $character);
+            } else {
+                // Character belongs to someone else. Do not do anything.
+            }
 
             $bar->advance();
         }
@@ -67,6 +76,6 @@ class RiseRosterUpdate extends Command
         $bar->finish();
 
         $this->info(PHP_EOL .'Deleting Members who are not in the guild anymore.');
-        Member::whereNotIn('name', $activeMembers)->delete();
+        // Member::whereNotIn('name', $activeMembers)->delete();
     }
 }

@@ -17,7 +17,7 @@ class CreateMembersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('realm');
-            $table->unsignedInteger('rank');
+            $table->unsignedInteger('rank')->default(10);
             $table->timestamps();
 
             $table->unique(['name', 'realm']); // I assume you misspelled it in your example

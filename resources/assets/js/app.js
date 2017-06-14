@@ -7,7 +7,18 @@
 
 require('./bootstrap');
 
+window.to = require('to-case');
+
 window.Vue = require('vue');
+
+Vue.prototype.authorize = function (handler) {
+    // Additional admin privileges here.
+    let user = window.App.user;
+
+    return user ? handler(user) : false;
+};
+
+window.events = new Vue();
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,7 +26,8 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('characters', require('./components/Characters.vue'));
+Vue.component('usermenu', require('./components/UserMenu.vue'));
 
 const app = new Vue({
     el: '#app'

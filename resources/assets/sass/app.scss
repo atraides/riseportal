@@ -1,31 +1,53 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-@import url(https://fonts.googleapis.com/css?family=Material%20Icons);
-
-@font-face {
-    font-family: "Blizzard";
-    src: url("../../../public/fonts/blizzard/blizzard.woff") format('woff');
-}
-
-@font-face {
-    font-family: "Blizzard";
-    src: url("../../../public/fonts/blizzard/blizzard-bold.woff") format('woff');
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "Blizzard";
-    src: url("../../../public/fonts/blizzard/blizzard-italic.woff") format('woff');
-    font-style: italic;
-}
 
 // Variables
 @import "variables";
 
-body {
-	    font-family: Blizzard;
-	    background-color: $body-bg;
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//  Get the TTF fonts as well.
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard.woff") format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-bold.woff") format('woff');
+    font-style: normal;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-italic.woff") format('woff');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-light.woff") format('woff');
+    font-weight: 100;
+}
+
+@mixin coloredBorder($r,$g,$b) {
+  border: 1px solid #000;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), inset 0 0 0 3px rgb($r,$g,$b), inset 0 0 0 4px #000, 0 0 10px rgba($r,$g,$b,.75);
+}
+
+html {
+    font-size: 16px;
+}
+
+.thin {
+    font-weight: 100;
 }
 
 .death_knight { color: #c41f3b; }
@@ -41,27 +63,15 @@ body {
 .warlock  { color: #9482c9; }
 .warrior  { color: #c79c6e; }
 
-nav.officer {
-    background-color: #0e242d !important;
-}
-
-.brand-logo img {
-    height: 35px;
-    vertical-align: middle;
-    margin-left: 15px;
-}
-nav img#postingAs {
-    height: 55px;
-    border: 1px solid #000;
-    vertical-align: middle;
-}
-
-.Author-name:hover, a {
-    text-decoration: none;
-}
-
-.Author-name--profileLink {
-    color: #fff!important;
+nav .postingAs {
+    font-weight: 400;
+    > img {
+        height: 36px;
+        margin-left: 15px;
+        margin-right: 15px;
+        border: 1px solid #000;
+        vertical-align: middle;
+    }
 }
 
 .Author-name {
@@ -95,23 +105,13 @@ nav img#postingAs {
     background-size: cover;
     border: 1px solid #000;
     position: relative;
-    height: 66px;
-    width: 66px;
+    height: 68px;
+    width: 68px;
     @media only screen and (min-width: 641px) {
-    	height: 82px;
-    	width: 82px;
+    	height: 84px;
+    	width: 84px;
     }
     background-image: url(/storage/icons/avatar-default.png);
-}
-
-.officer .Author-avatar img {
-    height: 56px;
-    margin: 4px 0 0 4px;
-    width: 56px;
-    @media only screen and (min-width: 641px) {
-        height: 72px;
-        width: 72px;
-    }
 }
 
 .Author-avatar img {
@@ -153,17 +153,44 @@ nav img#postingAs {
     width: 8px;
 }
 
-div {
-    display: block;
-}
-
 .Author-avatar img {
     height: 64px;
     width: 64px;
     @media only screen and (min-width: 641px) {
-    	height: 80px;
-    	width: 80px;
+        height: 84px;
+        width: 84px;
     }
+    .officer &, .officer_alt &, .member &, 
+    .recruit &, .alt &, .casual &,
+    .inactive & 
+    { 
+      height: 58px;
+      width: 58px;
+      margin: 4px 0 0 4px;
+      @media only screen and (min-width: 641px) {
+
+        height: 76px;
+        width: 76px;
+      }
+    }
+}
+
+.Author-avatar {
+    .officer &, .officer_alt & { @include coloredBorder(0,180,255) }
+    .member &, .alt & { @include coloredBorder(129,181,88) }
+    .inactive & { @include coloredBorder(93, 93, 93) }
+}
+
+.Author-details .Author-job {
+    font-size: .8125rem;
+    margin-top: .25rem;
+}
+
+.Author-details .Author-job {
+    .officer &, .officer_alt & { color: rgb(0,180,255); }
+    .member &, .alt & { color: rgb(129,181,88); }
+    .casual &, .guild_friend & { color: rgb(226, 91, 42); }
+    .inactive & { color: rgb(93, 93, 93); }
 }
 
 .Icon {
@@ -186,27 +213,6 @@ div {
     color: #fff;
 }
 
-.officer .Author-avatar {
-    border: 1px solid #000;
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), inset 0 0 0 3px #00b4ff, inset 0 0 0 4px #000, 0 0 10px rgba(0,180,255,.75);
-}
-
-.officer .Author-job {
-    color: #00b4ff;
-    font-size: .8125rem;
-    margin-top: .25rem;
-}
-
-.Author-job {
-    font-size: .8125rem;
-    margin-top: .25rem;
-}
-
-.container {
-    padding-top: 15px;
-}
-
 body {
     background: url(/storage/BGs/background-bnet-top.jpg) center -200px no-repeat,url(/storage/BGs/background-bnet-repeat.jpg) center 1800px repeat-y #0d1e30;
 }
@@ -224,22 +230,151 @@ body {
     width: 100%;
 }
 
-.Characters .Author {
+.Characters {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media only screen and (min-width: 641px) {
+        padding: 1rem;
+    }
+}
+
+.Character .Author {
     background-color: transparent;
     border: 1px solid transparent;
     cursor: pointer;
     -ms-flex-direction: row;
     flex-direction: row;
     padding: 10px;
-    width: 100%;
 }
 
-.Characters .main, .Characters .main:hover {
+.Character .Author:hover {
+    background-color: rgba(29, 34, 44, 0.63);
+    border-color: rgba(84, 84, 84, 0.8);
+}
+
+.Character .main, .Character .main:hover {
     background-color: rgba(35,194,255,.1);
     border-color: rgba(35,194,255,.5);
 }
 
-.Characters .Author:hover {
-    background-color: rgba(29, 34, 44, 0.63);
-    border-color: rgba(84, 84, 84, 0.8);
+.Character .Author-realm {
+    color: rgba(255,255,255,.5);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+.alert {
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.pre {
+    color: #cecece;
+    white-space: pre !important;
+}
+
+.bg-faded {
+   background-color:rgba(18,18,18, 0.5);
+}
+
+.characterSelectModal.active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+.characterSelectModal {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+.characterSelectModal .characterSelectInner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 1040px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 682px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 550px;
+        max-height: 100%;
+    }
+}
+
+.Characters .Character {
+    @media only screen and (min-width: 641px) {
+        border-bottom: 1px solid transparent;
+        margin: 0 1.25rem 1.25rem 0;
+        width: calc((100% / 2) - 1.25rem);
+    }
+
+    @media only screen and (min-width: 961px) {
+       width: calc((100% / 3) - 1.25rem);
+    }
+}
+
+.characterSelectInner .Title {
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    font-size: 30px;
+    color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 3.75rem;
+    font-weight: 100;
+    padding: 10px;
+}
+
+.characterSelectInner .load-more {
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    font-size: 1 rem;
+    color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 5px;
 }

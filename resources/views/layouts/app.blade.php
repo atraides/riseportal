@@ -12,56 +12,43 @@
 
     <!-- Styles -->
     <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('css/materialize.css') }}" rel="stylesheet">
+
+    <script>
+      window.App = {!! json_encode([
+          'signedIn' => Auth::check()
+      ]) !!};
+    </script>
 </head>
 <body>
-    <div id="app">
-        <!-- Dropdown Structure -->
-        <ul id='riseUserMenu' class='dropdown-content'>
-            <li><a href="#">Change Character</a></li>
-            <li><a href="#">Bela</a></li>
-            <li class="Dropdown-divider"></li>
-            <li>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">Logout</a>
-            </li>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        </ul>
-        <nav @if (Auth::check()) class="{{ auth()->user()->getGuildRank(1) }}" @endif>
-            <div class="nav-wrapper">
-              <a href="#" class="brand-logo"><img src="/storage/images/rise-text-small.png"/></a>
-              <ul id="nav-mobile" class="right hide-on-med-and-down">
-                  <!-- Authentication Links -->
-                  @if (Auth::guest())
-                  <li>Login with:</li>
-                  <li><a class="bi_battlenet" href="{{ url('/oauth/battlenet') }}">Battle.net</a></li>
-                  {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
-                  @else
-                  <!-- Dropdown Trigger -->
-                  <li>
-                    <a class="dropdown-button" href="#!" data-beloworigin="true" data-activates="riseUserMenu">
-                        <img id='postingAs' src="https://render-eu.worldofwarcraft.com/character/{{ Auth::user()->getMainCharacter()->thumbnail }}" />
-                        {{ Auth::user()->getMainCharacter()->name }}
-                        <i class="material-icons right">arrow_drop_down</i>
-                    </a>
-                </li>
-                @endif
-            </ul>
+  <div id="app">
+  <!-- Image and text -->
+    <nav class="navbar navbar-inverse bg-faded navbar-static-top" id="navbarNavDropdown">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img src="/storage/images/rise-text-small.png" height="40" class="d-inline-block align-middle" alt="">
+          </a>
         </div>
-    </nav>
-</div>
-</div>
-</nav>
 
-@yield('content')
-<flash message="temporary message"></flash>
-</div>
+        <div class="collapse navbar-collapse" id="app-navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <!-- Authentication Links -->
+            @if (Auth::guest())
+            <li>Login with:</li>
+            <li><a class="bi_battlenet" href="{{ url('/oauth/battlenet') }}">Battle.net</a></li>
+            {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
+            @else
+            <usermenu :data="{{ auth()->user() }}"/>
+            @endif
+          </ul>
+        </div>          
+      </div>
+    </nav>
+      
+    @yield('content')
+  </div>
 
 <!-- Scripts -->
 <script src="{{ secure_asset('js/app.js') }}"></script>
-<script src="{{ secure_asset('js/materialize.js') }}"></script>
 </body>
 </html>

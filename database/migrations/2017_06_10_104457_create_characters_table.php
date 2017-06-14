@@ -25,9 +25,11 @@ class CreateCharactersTable extends Migration
 			$table->unsignedInteger('gender');
 			$table->unsignedInteger('level');
 			$table->unsignedInteger('achievementPoints');
+            $table->unsignedInteger('rank')->default(11);
 			$table->string('thumbnail');
 			$table->unsignedInteger('lastModified');
-            $table->boolean('main')->nullable();
+            $table->boolean('main')->default(false)->nullable();
+            $table->unique(['name', 'realm']);
             $table->timestamps();
         });
     }

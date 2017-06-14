@@ -38,31 +38,28 @@ class User extends Authenticatable
     }
 
     public function getMainCharacter() {
-        $main = $this->characters->where('main',true)->first();
-        return ($main);
+        if($main = $this->characters->where('main',true)->first()) {
+            return ($main);
+        } else {
+            return (null);
+        }
+    }
+
+    public function activateUser()
+    {
+        $this->active = true;
+        $this->save();
     }
 
     public function getGuildRank($readable = null)
     {
-        $charRank = Member::whereIn('name',array_column($this->characters->toArray(),'name'))->min('rank');
+        $char = $this->characters->sortBy('rank')->first();
         if (!is_null($readable)) {
-            if (is_null($charRank)) { return 'guest'; }
+            if (is_null($char)) { return 'guest'; }
 
-            switch ($charRank) {
-                case 0: { return 'officer'; break; }
-                case 1: { return 'officer'; break; }
-                case 2: { return 'officer'; break; }
-                case 3: { return 'raidleader'; break; }
-                case 4: { return 'raider'; break; }
-                case 5: { return 'member'; break; }
-                case 6: { return 'recruit'; break; }
-                case 7: { return 'alt'; break; }
-                case 8: { return 'casual'; break; }
-                case 9: { return 'inactive'; break; }
-                default: { return 'guest'; break; }
-            }
+            return snake_case($char->rank_name);
         } else {
-            return $charRank;
+            return $char->rank;
         }
     }
 

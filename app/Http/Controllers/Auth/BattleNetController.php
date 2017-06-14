@@ -47,8 +47,11 @@ class BattleNetController extends Controller
         // if (Auth::check()) {
         //     $authUser = $this->updateUserToken($oauth, $provider);
         // } else {
-           $authUser = $this->findOrCreateUser($oauth, $provider);
-            Auth::login($authUser, true);
+           if ($authUser = $this->findOrCreateUser($oauth, $provider)) {
+                Auth::login($authUser, true);
+            } else {
+                return redirect('error')->with('status','Your user is inactive. If you think this is an error please contact an administartor.');
+            }
          
         // }
         return redirect($this->redirectTo);
@@ -65,22 +68,29 @@ class BattleNetController extends Controller
     public function findOrCreateUser($oauth, $provider)
     {
         $authUser = User::where('provider_id', $oauth->id)->first();
-        if ($authUser) {
+        if ($authUser && true === $authUser->active) {
             $authUser->updateToken($oauth->token);
             return $authUser;
-        }
-        
-        $user = User::create([
-            'name'     => $oauth->nickname,
-            'email'    => $oauth->email,
-            'provider' => $provider,
-            'provider_id' => $oauth->id,
-            ]);
+        } else if ($authUser && false === $authUser->active) {
+            return $authUser->active;
+        } else {
+            $user = User::create([
+                'name'     => $oauth->nickname,
+                'email'    => $oauth->email,
+                'provider' => $provider,
+                'provider_id' => $oauth->id,
+                'active'    => true
+                ]);
 
-        return $user->bnet()->create([
-            'access_token'  => $oauth->token,
-            'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp,
-            'scope'         => $oauth->accessTokenResponseBody['scope']
-            ]);
+            $user->bnet()->create([
+                'access_token'  => $oauth->token,
+                'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp,
+                'scope'         => $oauth->accessTokenResponseBody['scope']
+                ]);
+
+            $user->activateUser();
+
+            return $user;
+        }
     }
 }

@@ -3,33 +3,29 @@
 namespace App;
 
 use DebugBar;
+use DB;
 
 trait CharacterUpdates {
 
 	public function updateCharacters(User $user, $response)
 	{
-                foreach ($response->get('characters') as $character) {
-                        $character->lastModified = (int) $character->lastModified / 1000;
-                        if ($user->characters->contains('name',$character->name)) {
-                                $dbChar = $user->characters->where('name',$character->name)->where('realm',$character->realm)->first();
-                                if ($dbChar->lastModified < $character->lastModified) {
-                                      DebugBar::warning($character->name.' is older in the Database. Trying to update it. (' .$dbChar->lastModified.' < '.$character->lastModified.')');
-                                      $this->saveCharacterData($user,$character);  
-                                }
-                        } else {
-                                $this->saveCharacterData($user,$character);  
-                        }
+        $characters = Character::with('user')->get();
+        foreach ($response->get('characters') as $character) {
+            $character->lastModified = (int) $character->lastModified / 1000;
+            $character->user_id = ($user->id);
+
+            $chardata = $characters->where('name', $character->name)->where('realm', $character->realm);
+            if (!$chardata->isEmpty()) {
+                $chardata = $chardata->first();
+                if ($chardata->lastModified < $character->lastModified) {
+                    DebugBar::warning($character->name.' is older in the Database. Trying to update it. (' .$chardata->lastModified.' < '.$character->lastModified.')');
+                    // $searchArray = collect($chardata->toArray())->only('name','realm');
+                    $chardata->update((array) $character);
                 }
-
-                // foreach ( $response->get('characters') as $character ) {
-
-                // }
+            } else {
+                $q = $user->characters()->create((array) $character);
+            // $this->saveCharacterData($user,$character);  
+            }
         }
-
-        public function saveCharacterData(User $user, $data) {
-                $data = collect($data);
-
-                $user->characters()->updateOrCreate($data->only('name','realm')->toArray(), $data->toArray());
-                $user->save();
-        }
+    }
 }

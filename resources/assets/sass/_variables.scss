@@ -1,6 +1,8 @@
 
 // Body
-$body-bg: #efefef;
+$body-bg: #f5f8fa;
+
+$font-family-sans-serif:  "Blizzard", sans-serif !default;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -8,6 +10,8 @@ $list-group-border: $laravel-border-color;
 $navbar-default-border: $laravel-border-color;
 $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
+
+$font-size-base:          16px !default;
 
 // Brands
 $brand-primary: #3097D1;
@@ -18,13 +22,17 @@ $brand-danger: #bf5329;
 
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
-$font-size-base: 14px;
-$line-height-base: 1.6;
+$font-family-sans-serif: "Blizzard", sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1;
 $text-color: #636b6f;
 
 // Navbar
 $navbar-default-bg: #fff;
+$navbar-height: 43px;
+$navbar-inverse-color: rgba(255,255,255,.5) !default;
+$navbar-padding-vertical: 5px;
+
 
 // Buttons
 $btn-default-color: $text-color;
@@ -36,3 +44,19 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+$dropdown-bg:                    #272e3b !default;
+
+//** Dropdown link text color.
+$dropdown-link-color:            rgba(255,255,255,.7) !default;
+//** Hover color for dropdown links.
+$dropdown-link-hover-color:      rgba(255,255,255,.7) !default;
+//** Hover background for dropdown links.
+$dropdown-link-hover-bg:         #323945 !default;
+
+//** Dropdown menu `border-color`.
+$dropdown-border:                rgb(61,67,79) !default;
+
+$border-radius-base:        0px !default;
+$border-radius-large:       0px !default;
+$border-radius-small:       0px !default;

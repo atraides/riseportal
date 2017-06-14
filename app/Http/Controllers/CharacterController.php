@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Carbon\Carbon;
 use App\User;
 use App\Character;
+use DebugBar;
 
 use Illuminate\Http\Request;
 use Xklusive\BattlenetApi\Services\RiseService;
@@ -26,7 +29,7 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(RiseService $wow)
     {
         //
     }
@@ -46,9 +49,33 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(User $user, RiseService $wow)
+    public function list(Request $request, RiseService $wow)
     {
-        return $wow->getProfileCharacters([], $user->bnet->access_token, $user->id);
+        $attributes = [ 
+            'user_id' => auth()->user()->id
+        ];
+
+        $wow->getProfileCharacters();
+
+        $user = User::with('characters')->find(auth()->user()->id);
+
+        if (!$request->query('showAll')) {
+            $characters = $user->characters()
+                ->orderBy('main','desc')
+                ->orderBy('lastModified','desc')
+                // ->where('lastModified', '>=', Carbon::now()->subMonths(2)->timestamp)
+                // ->where('guild','Rise Legacy')
+                ->take(9)
+                ->get();
+        } else {
+            $characters = $user->characters()->get();
+        }
+
+        if (request()->expectsJson()) {
+            return $characters;
+        }
+
+        return view('home', compact('attributes'));
     }
 
     /**
@@ -58,14 +85,20 @@ class CharacterController extends Controller
      */
     public function setMain(Character $character)
     {
-        $oldMain = Character::where('main', true);
+        $oldMain = Character::where('main', true)->where('user_id',auth()->user()->id)->where('id', '!=', $character->id);
         $oldMain->get()->each(function ($om, $id) {
             $om->main = false;
             $om->save();
         });
 
-        $character->main = true;
-        $character->save();
+        if ($character->user_id == auth()->user()->id) {
+            $character->main = true;
+            $character->save();
+        }
+
+        if (request()->expectsJson()) {
+            return response(['status' => 'You Character set to Main!']);
+        }
 
         return back();
     }

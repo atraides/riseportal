@@ -20,9 +20,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () { return view('welcome'); });
 
+Route::get('/error', 'ErrorsController@show');
+
 Route::get('/guild', 'GuildController@show');
 Route::get('/guild/roster', 'GuildController@show');
-Route::post('/characters/{character}/main', 'CharacterController@setMain');
+Route::get('/character', 'CharacterController@index');
+Route::get('/character/list', 'CharacterController@list');
+Route::patch('/character/{character}/main', 'CharacterController@setMain');
 Route::get('/user/{user}/characters', 'CharacterController@list');
 
 Route::get('/rlp', 'DkpController@index');
