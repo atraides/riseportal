@@ -1,15 +1,15 @@
 <template>
-    <li class="dropdown">
-        <a class="dropdown-toggle" href="#!" data-toggle="dropdown" role="button" aria-expanded="false">
+    <div class="dropdown navbar-text my-auto characterMenu">
+        <div class="dropdown-toggle p-1 mx-2 h-100" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <mainchar/>
-        </a>
-
-        <ul class="dropdown-menu" role="menu">
-            <li>
-                <a href="#" @click="changeChar">Main Karakter</a>
-            </li>
-        </ul>
-    </li>
+        </div>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" @click="changeChar">Main Karakter</a>
+            <a class="dropdown-item" href="#" @click="logout">Kilepes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#" @click="deleteAccount">Account Torlese</a>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -27,7 +27,34 @@
 
         methods: {
             changeChar() {
-                events.$emit('openCharacterChanger',this.data.thumbnail);
+                window.events.$emit('openCharacterChanger',this.data.thumbnail);
+            },
+
+            logout() {
+                window.location = '/logout';
+            },
+
+            deleteAccount() {
+                axios.delete(`/user/${this.id}`, { data: this.data })
+                .then(window.location = '/logout')
+                .catch(function (error) {
+                    if (error.response) {
+                            // The request was made and the server responded with a status code
+                            // that falls out of the range of 2xx
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        } else if (error.request) {
+                            // The request was made but no response was received
+                            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                            // http.ClientRequest in node.js
+                            console.log(error.request);
+                        } else {
+                            // Something happened in setting up the request that triggered an Error
+                            console.log('Error', error.message);
+                        }
+                        console.log(error.config);
+                    });
             }
         }
     }

@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <characters :attributes="{{ json_encode($attributes) }}"></characters>
+    <characters :attributes="{{ $attributes }}"></characters>
 </div>
 @endsection

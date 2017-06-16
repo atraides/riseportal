@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Xklusive\BattlenetApi\Services\RiseService;
+
 use App\User;
 use App\Character;
+
+use Xklusive\BattlenetApi\Services\WowService;
 
 class RiseRosterUpdate extends Command
 {
@@ -38,7 +40,8 @@ class RiseRosterUpdate extends Command
      *
      * @return mixed
      */
-    public function handle(RiseService $wow)
+    public function handle(WoWService $wow)
+
     {
         $dummyUser = User::where('name','RiseGuild')->first();
 

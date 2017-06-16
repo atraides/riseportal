@@ -8,9 +8,11 @@ use App\User;
 use App\BattleNetAuth;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Socialite;
 
 class BattleNetController extends Controller
@@ -30,8 +32,12 @@ class BattleNetController extends Controller
         // $this->middleware('guest')->except(['logout']);
     }
 
-    public function redirectToProvider($provider)
+    public function redirectToProvider(Request $request, $provider)
     {
+        if (Auth::check() && $request->query('redirectBack')) {
+            Cache::put(implode('.',['battlenet_redirect',Auth::user()->id]),$request->query('redirectBack'),60);
+        }
+
         return Socialite::with($provider)->scopes(['wow.profile', 'sc2.profile'])->redirect();
     }
 
@@ -40,23 +46,148 @@ class BattleNetController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback($provider)
+    public function handleProviderCallback(Request $request, $provider)
     {
-        $oauth = Socialite::with($provider)->user();
+        if ($error = $request->get('error')) {
+            return redirect('/')->with('Error the OAuth provider has given an error: '.$error. ' -- '.$request->get('error_description'));
+        }
 
-        // if (Auth::check()) {
-        //     $authUser = $this->updateUserToken($oauth, $provider);
-        // } else {
-           if ($authUser = $this->findOrCreateUser($oauth, $provider)) {
-                Auth::login($authUser, true);
-            } else {
-                return redirect('error')->with('status','Your user is inactive. If you think this is an error please contact an administartor.');
+        try {
+            $oauth = Socialite::with($provider)->user();   
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            return redirect('/')->with('Error the OAuth provider has given an error: '.$error. ' -- '.$e->getResponse()->getBody());
+        }
+
+        $authUser = $this->findOrCreateUser($oauth, $provider);
+
+        if ( is_a($authUser,'App\User') ) {
+            Auth::login($authUser, true);
+        } else if ( is_array($authUser) && (array_key_exists('status', $authUser) && array_key_exists('user', $authUser)) ) {
+            if (is_a($authUser['user'],'App\User') && $authUser['status'] == 'newuser') {
+                Auth::login($authUser['user'], true);
+                return redirect('/user/'.$authUser['user']->id.'?newUser=1');
             }
-         
-        // }
-        return redirect($this->redirectTo);
+        } else {
+            return redirect('error')->with('status','Your user is inactive. If you think this is an error please contact an administartor.');
+        }
+
+        if (Auth::check() && $cacheRedirect = Cache::get(implode('.',['battlenet_redirect',Auth::user()->id]))) {
+            return redirect($cacheRedirect);
+        } else {
+            return redirect($this->redirectTo);    
+        }
     }
 
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function handleLogout(Request $request)
+    {
+        if (Auth::check()) {
+            Auth::logout(auth()->user());
+            $request->session()->flush();
+            $request->session()->regenerate();
+
+            $response = [
+                'status' => 200,
+                'statusText' => 'OK',
+                'details' => [
+                    'reasonPhrase' => 'Successfully logged out.'
+                ]
+            ];
+        } else {
+            $response = [
+                'status' => 200,
+                'statusText' => 'OK',
+                'details' => [
+                    'reasonPhrase' => 'User is not logged it. Nothing to logout.'
+                ]
+            ];
+        }
+
+        if (request()->expectsJson()) {
+            return response()->json($response,$response['status'] ? 200 : $response['status']);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    /**
+     * Delete the user account from the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAccount(Request $request, User $user)
+    {
+        if (Auth::check()) {
+            if ($user->id == auth()->user()->id) {
+                $user->bnet()->delete();
+                $user->characters()->where('guild','!=','Rise Legacy')->delete();
+                $user->characters()->where('guild', null)->delete();
+                $user->characters()->update(['user_id' => 1,'main' => false, 'lastModified' => 0]);
+                if ($user->delete()) {
+                    $response = [
+                        'status' => 200,
+                        'statusText' => 'OK',
+                        'details' => [
+                            'reasonPhrase' => 'User successfully deleted from the database.'
+                        ]
+                    ];    
+                } else { 
+                    $response = [
+                        'status' => 500,
+                        'statusText' => 'Internal Server Error',
+                        'details' => [
+                            'reasonPhrase' => 'We could not delete the user.'
+                        ]
+                    ];    
+                }
+            } else {
+                $response = [
+                    'status' => 403,
+                    'statusText' => 'Not Authorized',
+                    'details' => [
+                        'reasonPhrase' => 'You are not authorized to delete this user.'
+                    ]
+                ];
+            }
+        } else {
+            $response = [
+                'status' => 200,
+                'statusText' => 'OK',
+                'details' => [
+                    'reasonPhrase' => 'User is not logged it. Nothing to delete.'
+                ]
+            ];
+        }
+
+        if (request()->expectsJson()) {
+            return response()->json($response,$response['status'] ? 200 : $response['status']);
+        } else {
+            if ($response['status'] == 200) {
+                return redirect('/logout');
+            } else {
+                return redirect('/error')->with($response);
+            }
+        }
+    }
+
+    
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function handleLogin(Request $request)
+    {
+        return redirect('/oauth/battlenet');
+    }
 
     /**
      * If a user has registered before using social auth, return the user
@@ -90,7 +221,7 @@ class BattleNetController extends Controller
 
             $user->activateUser();
 
-            return $user;
+            return (['user' => $user, 'status' => 'newuser']);
         }
     }
 }

@@ -6,7 +6,7 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
 
 //  Get the TTF fonts as well.
 
@@ -68,7 +68,6 @@ nav .postingAs {
     > img {
         height: 36px;
         margin-left: 15px;
-        margin-right: 15px;
         border: 1px solid #000;
         vertical-align: middle;
     }
@@ -130,6 +129,11 @@ nav .postingAs {
     -ms-flex-direction: column;
     flex-direction: column;
     margin-left: 1rem;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .Author-achievements, .Author-class, .Author-guild {
@@ -198,19 +202,27 @@ nav .postingAs {
     display: inline-block;
 }
 
-.bi_battlenet {
+.bi_battlenet, .bi_battlenet:hover, .bi_battlenet:focus {
     background: url(/storage/icons/bnet.png) no-repeat 2px center;
-    display: inline-block;
-    vertical-align: middle;
-    width: 120px;
-    text-align: center;
+    padding-left: 30px !important;
     margin-right: 3px;
     margin-left: 10px;
+    text-decoration: none;
+    color: rgba(255,255,255,.7);
+}
+
+nav-text spa:nbootstrap hover, .bi_battlenet:hover {
+    color: rgba(255,255,255,1);
+    font-weight: 400;
 }
 
 .btn-battlenet {
     background-color: #0e98d8 !important;
     color: #fff;
+}
+
+html, body, #app {
+    height: 100%;
 }
 
 body {
@@ -287,7 +299,7 @@ body {
 }
 
 .bg-faded {
-   background-color:rgba(18,18,18, 0.5);
+   background-color: #272e3b;
 }
 
 .characterSelectModal.active {
@@ -367,14 +379,207 @@ body {
 }
 
 .characterSelectInner .load-more {
+    > a, a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
     -ms-flex-align: center;
     align-items: center;
     text-align: center;
+    font-size: 24px;
     background: rgba(255,255,255,.05);
     border-bottom: 1px solid rgba(255,255,255,.1);
-    font-size: 1 rem;
+    font-size: 1rem;
     color: #fff;
+    height: 35px;
+    padding: 5px;
+}
+
+.animationload {
+    background-color: rgba(16,16,16,.85);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+.osahanloading {
+    animation: 1.5s linear 0s normal none infinite running osahanloading;
+    background: #80bd14 none repeat scroll 0 0;
+    border-radius: 50px;
+    height: 50px;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: absolute;
+    top: 50%;
+    width: 50px;
+}
+.osahanloading:after {
+    animation: 1.5s linear 0s normal none infinite running osahanloading_after;
+    border-color: #242e2f transparent;
+    border-radius: 80px;
+    border-style: solid;
+    border-width: 10px;
+    content: "";
+    height: 80px;
+    left: -15px;
+    position: absolute;
+    top: -15px;
+    width: 80px;
+    box-sizing: border-box;
+}
+@keyframes osahanloading {
+0% {
+    transform: rotate(0deg);
+}
+50% {
+    background: #655a22 none repeat scroll 0 0;
+    transform: rotate(180deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+.title {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 100px);
+}
+
+.nav>li, {
+    position: relative;
+    display: flex;
+    padding: 0px 0px;
+    align-items: center;
+    height: 53px;
+}
+
+.nav>li>a {
+    display: flex;
+    padding: 0px 15px;
+    align-items: center;
+    height: 53px;
+    border-left: 1px solid #3d434f;
+    border-right: 1px solid #3d434f;
+}
+
+.navbar-inverse .navbar-nav .open a:hover, .navbar-inverse .navbar-nav .open a:focus, .navbar-inverse .navbar-nav .open a {
+    background-color: rgba(255,255,255,.15);
+    border-color: lighten(#3d434f,20%);
+}
+
+.navbar-nav li .dropdown-menu {
+    width: 100%;
+}
+
+#userDetailsModal .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#userDetailsModal .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
     display: -ms-flexbox;
     display: flex;
-    padding: 5px;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 500px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#userDetailsModal .active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+.has-danger .form-control {
+    border-color: #d9534f;
+}
+
+.has-danger .form-control-danger {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d9534f' viewBox='-2 -2 7 7'%3E%3Cpath stroke='%23d9534f' d='M0 0l3 3m0-3L0 3'/%3E%3Ccircle r='.5'/%3E%3Ccircle cx='3' r='.5'/%3E%3Ccircle cy='3' r='.5'/%3E%3Ccircle cx='3' cy='3' r='.5'/%3E%3C/svg%3E");
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: center right .5625rem;
+    -webkit-background-size: 1.125rem 1.125rem;
+    background-size: 1.125rem 1.125rem;
+}
+
+.has-danger+.form-group__message {
+    display: flex;
+    color: #f57f6c;
+}
+
+.form-group__message {
+    display: flex;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.characterMenu {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    // cursor: pointer;
+}
+
+.characterMenu:hover {
+    background-color: rgba(255,255,255,0.1);
 }

@@ -65,8 +65,8 @@
                     body: this.body
                 });
 
-                this.data.main = true;
-                this.eventMain(this.data);
+                // this.data.main = true;
+                this.eventMain();
         	},
 
             imageLoadError() {
@@ -75,7 +75,7 @@
 
             eventMain(data) {
                 this.$emit('main');
-                window.events.$emit('main',data);
+                window.events.$emit('main',this.data);
             } 
         }
     }

@@ -8,11 +8,16 @@ use App\User;
 use App\Character;
 use DebugBar;
 
+use App\CharacterUpdates;
+
 use Illuminate\Http\Request;
-use Xklusive\BattlenetApi\Services\RiseService;
+use Xklusive\BattlenetApi\Services\WowService;
 
 class CharacterController extends Controller
 {
+
+    use CharacterUpdates;
+    
     protected $characters = array();
     /**
      * Create a new controller instance.
@@ -29,7 +34,7 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(RiseService $wow)
+    public function index(WoWService $wow)
     {
         //
     }
@@ -49,33 +54,39 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request, RiseService $wow)
+    public function list(Request $request, WoWService $wow)
     {
-        $attributes = [ 
-            'user_id' => auth()->user()->id
-        ];
-
-        $wow->getProfileCharacters();
+        $attributes = json_encode([ 
+            'user_id' => auth()->user()->id,
+            'no_modal' => true
+        ]);
 
         $user = User::with('characters')->find(auth()->user()->id);
 
-        if (!$request->query('showAll')) {
-            $characters = $user->characters()
-                ->orderBy('main','desc')
-                ->orderBy('lastModified','desc')
-                // ->where('lastModified', '>=', Carbon::now()->subMonths(2)->timestamp)
-                // ->where('guild','Rise Legacy')
-                ->take(9)
-                ->get();
-        } else {
-            $characters = $user->characters()->get();
-        }
+        $response = $this->updateCharacters($user, $wow->getProfileCharacters([
+            'access_token' => $user->bnet->access_token,
+            'access_scope' => $user->bnet->scope
+        ]));
 
         if (request()->expectsJson()) {
+            if (is_a($response, 'GuzzleHttp\Exception\ClientException')) { return ((string) $response->getResponse()->getBody()); }
+
+            if ($request->query('showAll')) {
+                $characters = $user->characters()->get();
+            } else { 
+                $characters = $user->characters()
+                    ->orderBy('main','desc')
+                    ->orderBy('lastModified','desc')
+                    // ->where('lastModified', '>=', Carbon::now()->subMonths(2)->timestamp)
+                    // ->where('guild','Rise Legacy')
+                    ->take(9)
+                    ->get();
+            }
+
             return $characters;
         }
 
-        return view('home', compact('attributes'));
+        return view('character', compact('attributes'));
     }
 
     /**

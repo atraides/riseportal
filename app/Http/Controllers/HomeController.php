@@ -35,7 +35,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(RiseService $wow) {
-        return redirect('/character');
+    public function index() {
+        $attributes = json_encode([ 
+            'user_id' => auth()->user()->id,
+        ]);
+
+        return view('home', compact('attributes'));
     }
  }

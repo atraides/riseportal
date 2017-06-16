@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('babel-polyfill');
 
 window.to = require('to-case');
 
@@ -20,6 +21,9 @@ Vue.prototype.authorize = function (handler) {
 
 window.events = new Vue();
 
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -28,6 +32,7 @@ window.events = new Vue();
 
 Vue.component('characters', require('./components/Characters.vue'));
 Vue.component('usermenu', require('./components/UserMenu.vue'));
+Vue.component('userdetails', require('./components/UserDetails.vue'));
 
 const app = new Vue({
     el: '#app'

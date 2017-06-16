@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset(mix('css/app.css')) }}" rel="stylesheet">
 
     <script>
       window.App = {!! json_encode([
@@ -21,34 +21,40 @@
 </head>
 <body>
   <div id="app">
-  <!-- Image and text -->
-    <nav class="navbar navbar-inverse bg-faded navbar-static-top" id="navbarNavDropdown">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <img src="/storage/images/rise-text-small.png" height="40" class="d-inline-block align-middle" alt="">
-          </a>
-        </div>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded">
+  <span class="navbar-brand" href="#">
+    <img src="/storage/images/rise-text-small.png" height="40" class="d-inline-block align-middle" alt="">
+  </span>
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!-- Authentication Links -->
-            @if (Auth::guest())
-            <li>Login with:</li>
-            <li><a class="bi_battlenet" href="{{ url('/oauth/battlenet') }}">Battle.net</a></li>
-            {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
-            @else
-            <usermenu :data="{{ auth()->user() }}"/>
-            @endif
-          </ul>
-        </div>          
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav my-auto mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <!-- Authentication Links -->
+    @if (Auth::guest())
+    <div class="navbar-text my-auto characterMenu">
+      <div class="p-1 mx-2 h-100">
+          Login with: <a class="bi_battlenet" href="{{ url('/oauth/battlenet') }}">Battle.net</a>
       </div>
-    </nav>
+    </div>
+    @else
+      <usermenu :data="{{ json_encode(['id' => auth()->user()->id]) }}"/>
+    @endif
+  </div>
+</nav>
       
     @yield('content')
   </div>
 
 <!-- Scripts -->
-<script src="{{ secure_asset('js/app.js') }}"></script>
+<script src="{{ secure_asset(mix('js/app.js')) }}"></script>
 </body>
 </html>

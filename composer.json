@@ -13,14 +13,14 @@
     "require": {
         "php": ">=5.6.4",
         "Nathanmac/Parser": "4.*",
-        "atraides/laravel-battlenet-api": "0.9.2",
         "barryvdh/laravel-debugbar": "^2.3",
         "hannesvdvreken/guzzle-debugbar": "^2.0",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "socialiteproviders/battlenet": "^2.0"
+        "socialiteproviders/battlenet": "^2.0",
+        "xklusive/laravel-battlenet-api": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

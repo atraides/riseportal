@@ -1,49 +1,25 @@
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
 
-// Body
-$body-bg: #f5f8fa;
+$font-family-sans-serif: -apple-system, Blizzard, Arial, sans-serif !default;
+$font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:       $font-family-sans-serif !default;
 
-$font-family-sans-serif:  "Blizzard", sans-serif !default;
+$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
 
-// Borders
-$laravel-border-color: darken($body-bg, 10%);
-$list-group-border: $laravel-border-color;
-$navbar-default-border: $laravel-border-color;
-$panel-default-border: $laravel-border-color;
-$panel-inner-border: $laravel-border-color;
+$border-width: 1px !default;
 
-$font-size-base:          16px !default;
+// $border-radius:          .25rem !default;
+// $border-radius-lg:       .3rem !default;
+// $border-radius-sm:       .2rem !default;
 
-// Brands
-$brand-primary: #3097D1;
-$brand-info: #8eb4cb;
-$brand-success: #2ab27b;
-$brand-warning: #cbb956;
-$brand-danger: #bf5329;
+$border-radius:        0px !default;
+$border-radius-lg:       0px !default;
+$border-radius-sm:       0px !default;
 
-// Typography
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Blizzard", sans-serif;
-$font-size-base: 16px;
-$line-height-base: 1;
-$text-color: #636b6f;
-
-// Navbar
-$navbar-default-bg: #fff;
-$navbar-height: 43px;
-$navbar-inverse-color: rgba(255,255,255,.5) !default;
-$navbar-padding-vertical: 5px;
-
-
-// Buttons
-$btn-default-color: $text-color;
-
-// Inputs
-$input-border: lighten($text-color, 40%);
-$input-border-focus: lighten($brand-primary, 25%);
-$input-color-placeholder: lighten($text-color, 30%);
-
-// Panels
-$panel-default-heading-bg: #fff;
+$navbar-padding-y:                  0px !default;
+$navbar-brand-padding-y:            0px !default;
 
 $dropdown-bg:                    #272e3b !default;
 
@@ -55,8 +31,4 @@ $dropdown-link-hover-color:      rgba(255,255,255,.7) !default;
 $dropdown-link-hover-bg:         #323945 !default;
 
 //** Dropdown menu `border-color`.
-$dropdown-border:                rgb(61,67,79) !default;
-
-$border-radius-base:        0px !default;
-$border-radius-large:       0px !default;
-$border-radius-small:       0px !default;
+$dropdown-border-color:                rgb(61,67,79) !default;

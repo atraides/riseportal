@@ -37,7 +37,7 @@ class User extends Authenticatable
         return $this->hasMany(Character::class);
     }
 
-    public function getMainCharacter() {
+    public function getMain() {
         if($main = $this->characters->where('main',true)->first()) {
             return ($main);
         } else {
