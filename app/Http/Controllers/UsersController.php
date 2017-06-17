@@ -104,7 +104,7 @@ class UsersController extends Controller
         $response = 'OK';
 
         if ($validator->fails()) {
-            return response()->json(['status' => 304, 'statusText' => 'Not Modified' ,'reasonPhrase' => 'The provided details were invalid.'],304);
+            return response(['status' => 406, 'statusText' => 'Not Acceptable', 'message' => 'You have to provide a valid email and username'],406);
         } else {
             $user->update($request->all());
             if ($request->input('name') && $user->name == $request->input('name') && $response == 'OK') {

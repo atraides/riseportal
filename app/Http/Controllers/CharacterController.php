@@ -57,7 +57,7 @@ class CharacterController extends Controller
     public function list(Request $request, WoWService $wow)
     {
         $user = User::with('characters')->find(auth()->user()->id);
-        $provider = $user->providers()->where('provider',$user->provider)->first();
+        $provider = $user->providers()->where('provider','battlenet')->first();
 
         $attributes = json_encode([ 
             'user_id' => auth()->user()->id,
@@ -88,31 +88,6 @@ class CharacterController extends Controller
         }
 
         return view('character', compact('attributes'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function setMain(Character $character)
-    {
-        $oldMain = Character::where('main', true)->where('user_id',auth()->user()->id)->where('id', '!=', $character->id);
-        $oldMain->get()->each(function ($om, $id) {
-            $om->main = false;
-            $om->save();
-        });
-
-        if ($character->user_id == auth()->user()->id) {
-            $character->main = true;
-            $character->save();
-        }
-
-        if (request()->expectsJson()) {
-            return response(['status' => 'You Character set to Main!']);
-        }
-
-        return back();
     }
 
     /**
@@ -157,7 +132,26 @@ class CharacterController extends Controller
      */
     public function update(Request $request, Character $character)
     {
-        //
+        if (array_key_exists('main',$request->all())) {
+            $oldMain = Character::where('main', true)->where('user_id',auth()->user()->id)->where('id', '!=', $character->id);
+            $oldMain->get()->each(function ($om, $id) {
+                $om->main = false;
+                $om->save();
+            });
+
+            if ($character->user_id == auth()->user()->id) {
+                $character->main = true;
+                if ($character->save()) {
+                    return response(['status' => 200, 'statusText' => 'OK', 'message' => 'You Character set to Main.'],200);
+                } else {
+                    return response(['status' => 500, 'statusText' => 'Internal Server Error', 'message' => 'We cannot change you character.'],500);
+                }
+            } else {
+                return response(['status' => 403, 'statusText' => 'Unauthorized', 'message' => 'You are not authorized to update this character.'],403);
+            }
+        } else {
+            return response(['status' => 406, 'statusText' => 'Not Acceptable', 'message' => 'You can only update the character main status'],406);
+        }
     }
 
     /**

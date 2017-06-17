@@ -31,10 +31,10 @@ class UserTest extends TestCase
     	$updatedEmail = 'Almale';
 
     	$this->patch("/user/{$user->id}", ['name' => $user->name, 'email' => $updatedEmail])
-   			->assertStatus(304);
+   			->assertStatus(406);
    		$this->assertDatabaseMissing('users', ['email' => $updatedEmail]);
 
    		$this->patch("/user/{$user->id}", ['name' => $user->name, 'email' => $user->email])
-   			->assertStatus(304);
+   			->assertStatus(406);
     }
 }

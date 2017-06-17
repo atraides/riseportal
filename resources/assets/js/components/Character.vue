@@ -61,8 +61,8 @@
 
         methods: {
         	setMain() {
-        		axios.patch('/character/' + this.data.id + '/main', {
-                    body: this.body
+        		axios.patch('/character/' + this.data.id, {
+                    main: true
                 });
 
                 // this.data.main = true;
