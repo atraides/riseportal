@@ -22,6 +22,7 @@ Route::get('/login','Auth\OAuthProvidersController@handleLogin')->name('login');
 Route::delete('/user/{user}','Auth\OAuthProvidersController@deleteAccount');
 Route::get('/user/{user}','UsersController@show');
 Route::get('/user/{user}/new','UsersController@newUser')->name('newuser');
+// Route::get('/user/{user}','UsersController@update');
 Route::patch('/user/{user}','UsersController@update');
 
 Route::get('/guild', 'GuildController@show');

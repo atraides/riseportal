@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Validator;
 use App\User;
 use Auth;
 
@@ -94,9 +96,16 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+         $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users'
+        ]);
+
         $response = 'OK';
-        // if ($user->id == Auth::user()->id) { // Need to be an API...
-        if (validator($request->all())) {
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 304, 'statusText' => 'Not Modified' ,'reasonPhrase' => 'The provided details were invalid.'],304);
+        } else {
             $user->update($request->all());
             if ($request->input('name') && $user->name == $request->input('name') && $response == 'OK') {
                 $response = 'OK';
@@ -110,12 +119,11 @@ class UsersController extends Controller
             }
 
             if ($response = 'OK') {
-                return response()->json(['status' => 200, 'statusText' => 'OK' ,'reasonPhrase' => 'User successfully updated.']);
+                return response()->json(['status' => 200, 'statusText' => 'OK' ,'reasonPhrase' => 'User successfully updated.'],200);
             } else { 
-                return response()->json(['status' => 500, 'statusText' => 'NOK' ,'reasonPhrase' => 'We could not update the requested user.']);
+                return response()->json(['status' => 500, 'statusText' => 'NOK' ,'reasonPhrase' => 'We could not update the requested user.'],500);
             }
-        // } else {
-            return response()->json(['status' => 403, 'statusText' => 'Not Authorized' ,'reasonPhrase' => 'Your are not authorize to update this user.']);
+            return response()->json(['status' => 403, 'statusText' => 'Not Authorized' ,'reasonPhrase' => 'Your are not authorize to update this user.'],403);
         }
     }
 
