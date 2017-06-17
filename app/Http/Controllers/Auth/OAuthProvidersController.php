@@ -69,7 +69,7 @@ class OAuthProvidersController extends Controller
                 $attributes = json_encode([ 
                     'user_id' => Auth::user()->id,
                     'no_modal' => false,
-                    'show_modal' => true
+                    'new_user' => true
                 ]);
 
                 return view('newuser', compact('attributes'));

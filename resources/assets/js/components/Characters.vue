@@ -155,7 +155,17 @@
 
                     this.characters[index].main = true;
                     this.characters = _.orderBy(this.characters, ['main','lastModified'], ['desc','desc']);
-                    this.modal ? console.info('No Modal window to close') : this.hide();
+
+                    if (this.attributes.new_user) {
+                        this.showLoading();
+                        window.location = '/home'; 
+                    } else {
+                        if (this.modal) {
+                            this.hide();
+                        } else {
+                            console.info('No Modal window to close');
+                        }
+                    }
                 }
             }
         }
