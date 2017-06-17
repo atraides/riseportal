@@ -22,6 +22,7 @@
     </div>
     <div class="animationload" v-show="loading">
         <div class="osahanloading"></div>
+        <div class="loadingText">Kérlek várj...</div>
     </div>
 </div>
 </template>
@@ -138,6 +139,7 @@
                     this.characters = _.orderBy(data, ['main','lastModified'], ['desc','desc']);    
                 }
                 this.hideLoading();
+                events.$emit('openUserDetailsWindow');
                 // this.show();
             },
 

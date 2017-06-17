@@ -67,9 +67,19 @@
             }
         },
 
+        created() {
+            // window.addEventListener('keydown', (e) => {
+            //     if (this.active && e.keyCode == 27) {
+            //         this.hide();
+            //     }
+            // });
+
+            window.events.$on('openUserDetailsWindow', this.show );
+        },
+
         data() {
             return {
-                active: this.attributes.show_modal,
+                active: false,
                 required: 'Ez a mezo kotelezo.',
                 validEmail: 'Ervenyes E-Mail cimet kell megadni.',
                 userAlreadyExists: 'Ez a felhasznalonev mar foglalt.',
