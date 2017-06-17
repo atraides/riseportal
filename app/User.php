@@ -2,14 +2,15 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use App\CharacterUpdates;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use CharacterUpdates;
+    use HasApiTokens, Notifiable, CharacterUpdates;
 
     /**
      * The attributes that are mass assignable.

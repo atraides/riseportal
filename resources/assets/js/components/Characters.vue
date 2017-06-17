@@ -160,7 +160,7 @@
                         this.showLoading();
                         window.location = '/home'; 
                     } else {
-                        if (this.modal) {
+                        if (this.active) {
                             this.hide();
                         } else {
                             console.info('No Modal window to close');
