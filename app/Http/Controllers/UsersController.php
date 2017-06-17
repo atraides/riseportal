@@ -17,7 +17,7 @@ class UsersController extends Controller
     {
       $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -57,13 +57,7 @@ class UsersController extends Controller
      */
     public function show(Request $request, User $user)
     {
-        $attributes = json_encode([ 
-            'user_id' => auth()->user()->id,
-            'no_modal' => false,
-            'show_modal' => true
-        ]);
-
-        return view('newuser', compact('attributes'));
+        //
     }
 
     /**

@@ -65,7 +65,14 @@ class BattleNetController extends Controller
         } else if ( is_array($authUser) && (array_key_exists('status', $authUser) && array_key_exists('user', $authUser)) ) {
             if (is_a($authUser['user'],'App\User') && $authUser['status'] == 'newuser') {
                 Auth::login($authUser['user'], true);
-                return redirect('/user/'.$authUser['user']->id.'?newUser=1');
+                // return redirect('/user/'.$authUser['user']->id.'?newUser=1');
+                $attributes = json_encode([ 
+                    'user_id' => Auth::user()->id,
+                    'no_modal' => false,
+                    'show_modal' => true
+                ]);
+
+                return view('newuser', compact('attributes'));
             }
         } else {
             return redirect('error')->with('status','Your user is inactive. If you think this is an error please contact an administartor.');
@@ -87,7 +94,7 @@ class BattleNetController extends Controller
     public function handleLogout(Request $request)
     {
         if (Auth::check()) {
-            Auth::logout(auth()->user());
+            Auth::logout(Auth::user());
             $request->session()->flush();
             $request->session()->regenerate();
 
@@ -124,7 +131,7 @@ class BattleNetController extends Controller
     public function deleteAccount(Request $request, User $user)
     {
         if (Auth::check()) {
-            if ($user->id == auth()->user()->id) {
+            if ($user->id == Auth::user()->id) {
                 $user->bnet()->delete();
                 $user->characters()->where('guild','!=','Rise Legacy')->delete();
                 $user->characters()->where('guild', null)->delete();
