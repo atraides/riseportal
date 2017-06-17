@@ -10,22 +10,18 @@
 |
 */
 
-// Auth::routes();
-Route::get('oauth/{provider}', 'Auth\BattleNetController@redirectToProvider');
-Route::get('oauth/{provider}/callback', 'Auth\BattleNetController@handleProviderCallback');
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/', function () { return view('welcome'); });
 
+Route::get('oauth/{provider}', 'Auth\OAuthProvidersController@redirectToProvider');
+Route::get('oauth/{provider}/callback', 'Auth\OAuthProvidersController@handleProviderCallback');
+
 Route::get('/error', 'ErrorsController@show');
-Route::get('/logout','Auth\BattleNetController@handleLogout')->name('logout');
-Route::get('/login','Auth\BattleNetController@handleLogin')->name('login');
-Route::delete('/user/{user}','Auth\BattleNetController@deleteAccount');
+Route::get('/logout','Auth\OAuthProvidersController@handleLogout')->name('logout');
+Route::get('/login','Auth\OAuthProvidersController@handleLogin')->name('login');
+Route::delete('/user/{user}','Auth\OAuthProvidersController@deleteAccount');
 Route::get('/user/{user}','UsersController@show');
-// Route::post('/user/{user}','UsersController@update');
 Route::patch('/user/{user}','UsersController@update');
-// Route::get('/user/{user}/patch','UsersController@update');
 Route::get('/user/uniq/{username}','UsersController@uniq');
 
 

@@ -99,6 +99,7 @@ class UsersController extends Controller
     {
         $response = 'OK';
         // if ($user->id == Auth::user()->id) { // Need to be an API...
+        if (validator($request->all())) {
             $user->update($request->all());
             if ($request->input('name') && $user->name == $request->input('name') && $response == 'OK') {
                 $response = 'OK';
@@ -118,7 +119,22 @@ class UsersController extends Controller
             }
         // } else {
             return response()->json(['status' => 403, 'statusText' => 'Not Authorized' ,'reasonPhrase' => 'Your are not authorize to update this user.']);
-        // }
+        }
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+            ]);
     }
 
     /**

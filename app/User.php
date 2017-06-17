@@ -29,8 +29,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function bnet() {
-        return $this->hasOne(BattleNetAuth::class);
+    public function providers() {
+        return $this->hasMany(OauthProvider::class);
     }
 
     public function characters() {
@@ -64,9 +64,11 @@ class User extends Authenticatable
     }
 
     public function updateToken($token = null) {
-        if (!is_null($token) && $token != $this->bnet->access_token) {
-            $this->bnet->access_token = $token;
-            $this->bnet->save();
+        $provider = $this->providers()->where('provider',$this->provider)->first();
+
+        if (!is_null($token) && $token != $provider->access_token) {
+            $provider->access_token = $token;
+            $provider->save();
         }
     }
 }

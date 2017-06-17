@@ -32,7 +32,7 @@ class Character extends Model
      * @var array
      */
     protected $fillable = [
-    'user_id', 'name', 'realm', 'rank','battlegroup', 'guild', 'class', 'race', 'gender', 'level', 'achievementPoints', 'thumbnail', 'lastModified'
+        'user_id', 'name', 'realm', 'rank','battlegroup', 'guild', 'class', 'race', 'gender', 'level', 'achievementPoints', 'thumbnail', 'lastModified'
     ];
 
     /**
@@ -72,10 +72,13 @@ class Character extends Model
             case 6: return 'Tauren'; break;
             case 7: return 'Gnome'; break;
             case 8: return 'Troll'; break;
+            case 9: return 'Goblin'; break;
             case 10: return 'Bloodelf'; break;
             case 11: return 'Draenei'; break;
             case 22: return 'Worgen'; break;
+            case 24: return 'Pandaren'; break;
             case 25: return 'Pandaren'; break;
+            case 26: return 'Pandaren'; break;
             default:  return null; break;
         }
     }

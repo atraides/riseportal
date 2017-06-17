@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBattleNetAuthsTable extends Migration
+class CreateOAuthProvidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateBattleNetAuthsTable extends Migration
      */
     public function up()
     {
-        Schema::create('battle_net_auths', function (Blueprint $table) {
+        Schema::create('oauth_providers', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->string('provider');
             $table->string('access_token');
             $table->string('scope')->nullable();
             $table->unsignedInteger('expires');
@@ -31,6 +32,6 @@ class CreateBattleNetAuthsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('battle_net_auths');
+        Schema::dropIfExists('oauth_providers');
     }
 }

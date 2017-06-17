@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
 
-class BattleNetController extends Controller
+class OAuthProvidersController extends Controller
 {
 
     use AuthenticatesUsers;
@@ -29,7 +29,7 @@ class BattleNetController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('guest')->except(['logout']);
+        $this->middleware('guest',['only' => 'handleLogin']);
     }
 
     public function redirectToProvider(Request $request, $provider)
@@ -203,7 +203,7 @@ class BattleNetController extends Controller
      * @param $provider Social auth provider
      * @return  User
      */
-    public function findOrCreateUser($oauth, $provider)
+    private function findOrCreateUser($oauth, $provider)
     {
         $authUser = User::where('provider_id', $oauth->id)->first();
         if ($authUser && true === $authUser->active) {
@@ -220,10 +220,11 @@ class BattleNetController extends Controller
                 'active'    => true
                 ]);
 
-            $user->bnet()->create([
+            $user->providers()->create([
                 'access_token'  => $oauth->token,
                 'expires'       => Carbon::now()->addSeconds($oauth->expiresIn)->timestamp,
-                'scope'         => $oauth->accessTokenResponseBody['scope']
+                'scope'         => $oauth->accessTokenResponseBody['scope'],
+                'provider'      => $user->provider
                 ]);
 
             $user->activateUser();

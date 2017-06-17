@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class BattleNetAuth extends Authenticatable
+class OauthProvider extends Authenticatable
 {
 
 	protected $fillable = [
-        'access_token', 'expires', 'scope'
+        'provider', 'access_token', 'expires', 'scope'
     ];
 
     public function users() {

@@ -56,16 +56,17 @@ class CharacterController extends Controller
      */
     public function list(Request $request, WoWService $wow)
     {
+        $user = User::with('characters')->find(auth()->user()->id);
+        $provider = $user->providers()->where('provider',$user->provider)->first();
+
         $attributes = json_encode([ 
             'user_id' => auth()->user()->id,
             'no_modal' => true
         ]);
 
-        $user = User::with('characters')->find(auth()->user()->id);
-
         $response = $this->updateCharacters($user, $wow->getProfileCharacters([
-            'access_token' => $user->bnet->access_token,
-            'access_scope' => $user->bnet->scope
+            'access_token' => $provider->access_token,
+            'access_scope' => $provider->scope
         ]));
 
         if (request()->expectsJson()) {

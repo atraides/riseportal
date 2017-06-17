@@ -9,6 +9,17 @@ use App\CharacterUpdates;
 class GuildController extends Controller
 {
 	use CharacterUpdates;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function show(RiseService $wow) {
     	
     	$result = collect($wow->getGuildMembers('Arathor', 'Rise Legacy')->get('members'));

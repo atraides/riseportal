@@ -3,7 +3,6 @@
 namespace App;
 
 use DebugBar;
-use DB;
 
 trait CharacterUpdates {
 
