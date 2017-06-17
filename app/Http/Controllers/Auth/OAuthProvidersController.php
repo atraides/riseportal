@@ -205,7 +205,7 @@ class OAuthProvidersController extends Controller
      */
     private function findOrCreateUser($oauth, $provider)
     {
-        $authUser = User::where('provider_id', $oauth->id)->first();
+        $authUser = User::where('provider_id', $oauth->id)->where('provider', $provider)->first();
         if ($authUser && true === $authUser->active) {
             $authUser->updateToken($oauth->token);
             return $authUser;
