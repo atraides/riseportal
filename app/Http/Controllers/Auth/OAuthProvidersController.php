@@ -132,7 +132,7 @@ class OAuthProvidersController extends Controller
     {
         if (Auth::check()) {
             if ($user->id == Auth::user()->id) {
-                $user->bnet()->delete();
+                $user->providers()->delete();
                 $user->characters()->where('guild','!=','Rise Legacy')->delete();
                 $user->characters()->where('guild', null)->delete();
                 $user->characters()->update(['user_id' => 1,'main' => false, 'lastModified' => 0]);

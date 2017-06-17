@@ -53,7 +53,7 @@
                 minLength: minLength(4),
                 async isUnique (value) {
                     if (value === '') return true;
-                    axios.get(`/user/uniq/${value}`)
+                    axios.get(`/api/uniq/username/${value}`)
                     .then(response => {
                         this.userUniq = Boolean(response.data);
                     })

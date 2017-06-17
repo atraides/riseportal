@@ -34,9 +34,9 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(WoWService $wow)
+    public function index()
     {
-        //
+        return view('oauth-test');
     }
 
     /**
