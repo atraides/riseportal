@@ -16,6 +16,7 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "hannesvdvreken/guzzle-debugbar": "^2.0",
         "laravel/framework": "5.4.*",
+        "laravel/passport": "^2.0",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
