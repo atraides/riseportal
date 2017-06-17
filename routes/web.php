@@ -21,9 +21,8 @@ Route::get('/logout','Auth\OAuthProvidersController@handleLogout')->name('logout
 Route::get('/login','Auth\OAuthProvidersController@handleLogin')->name('login');
 Route::delete('/user/{user}','Auth\OAuthProvidersController@deleteAccount');
 Route::get('/user/{user}','UsersController@show');
+Route::get('/user/{user}/new','UsersController@newUser')->name('newuser');
 Route::patch('/user/{user}','UsersController@update');
-Route::get('/user/uniq/{username}','UsersController@uniq');
-
 
 Route::get('/guild', 'GuildController@show');
 Route::get('/guild/roster', 'GuildController@show');

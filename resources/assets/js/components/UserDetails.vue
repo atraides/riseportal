@@ -30,6 +30,7 @@
                         </div>
                         <div class="form-control-feedback" v-if="!$v.email.required"><small>{{ required }}</small></div>
                         <div class="form-control-feedback" v-else-if="!$v.email.email"><small>{{ validEmail }}</small></div>
+                        <div class="form-control-feedback" v-else-if="!$v.email.isUnique"><small>{{ emailAlreadyExists }}</small></div>
                         <div class="form-control-feedback" v-else><small>&nbsp;</small></div>
                     </div>
 
@@ -52,10 +53,12 @@
                 required,
                 minLength: minLength(4),
                 async isUnique (value) {
-                    if (value === '') return true;
-                    axios.get(`/api/uniq/username/${value}`)
+                    if (value === '' || value.length < 4) return true;
+                    axios.get(`/api/uniq/name/${value}`)
                     .then(response => {
-                        this.userUniq = Boolean(response.data);
+                        if (response.status == 200) {
+                            this.userUniq = Boolean(response.data.uniq);
+                        }
                     })
                     return (this.userUniq);
                 }
@@ -63,7 +66,17 @@
             email: {
                 required,
                 email,
-                minLength: minLength(4)
+                minLength: minLength(4),
+                async isUnique (value) {
+                    if (value === '' || value.length < 4 || !this.$v.email.email) return true;
+                    axios.get(`/api/uniq/email/${value}`)
+                    .then(response => {
+                        if (response.status == 200) {
+                            this.emailUniq = Boolean(response.data.uniq);
+                        }
+                    })
+                    return (this.emailUniq);
+                }
             }
         },
 
@@ -83,10 +96,12 @@
                 required: 'Ez a mezo kotelezo.',
                 validEmail: 'Ervenyes E-Mail cimet kell megadni.',
                 userAlreadyExists: 'Ez a felhasznalonev mar foglalt.',
+                emailAlreadyExists: 'Ez az E-Mail cim mar regisztralva van.',
                 username: '',
                 btnDisabled: false,
                 email: '',
-                userUniq: false
+                userUniq: null,
+                emailUniq: null
             }
         },
 

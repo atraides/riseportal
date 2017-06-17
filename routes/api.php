@@ -15,5 +15,5 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->group(function () {
 	Route::get('/user', function (Request $request) { return $request->user(); });
-	Route::get('/uniq/username/{username}',function($username) { dd($username); });
+	Route::get('/uniq/{type}/{value}','Api\ApiController@uniq');
 });

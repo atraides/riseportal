@@ -65,14 +65,8 @@ class OAuthProvidersController extends Controller
         } else if ( is_array($authUser) && (array_key_exists('status', $authUser) && array_key_exists('user', $authUser)) ) {
             if (is_a($authUser['user'],'App\User') && $authUser['status'] == 'newuser') {
                 Auth::login($authUser['user'], true);
-                // return redirect('/user/'.$authUser['user']->id.'?newUser=1');
-                $attributes = json_encode([ 
-                    'user_id' => Auth::user()->id,
-                    'no_modal' => false,
-                    'new_user' => true
-                ]);
 
-                return view('newuser', compact('attributes'));
+                return redirect()->route('newuser',[Auth::user()]);
             }
         } else {
             return redirect('error')->with('status','Your user is inactive. If you think this is an error please contact an administartor.');

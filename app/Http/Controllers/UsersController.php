@@ -61,23 +61,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function uniq($username)
-    {
-        $user = User::where('name', $username)->get();
-
-        if ($user->isEmpty()) {
-            return response()->json(['status' => 'ok', 'message' => 'User is uniq, not exists in the database.']);
-        } else {
-            return response()->json(false);
-        }
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -86,6 +69,20 @@ class UsersController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function newUser(User $user)
+    {
+        if (!$user->name or !$user->email) {
+            $attributes = json_encode([ 
+                'user_id' => $user->id,
+                'no_modal' => false,
+                'new_user' => true
+            ]);
+            return view('newuser', compact('attributes'));
+        } else {
+            return redirect('/home');
+        }
     }
 
     /**
