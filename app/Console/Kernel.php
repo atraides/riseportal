@@ -27,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('rise:roster:update')
                  ->twiceDaily(1, 13);
+        $schedule->command('rise:character:update')
+                 ->twiceDaily(2, 14);
     }
 
     /**

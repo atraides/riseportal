@@ -3,11 +3,12 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Xklusive\BattlenetApi\Services\RiseService;
+
 use App\User;
 use App\Character;
-
 use App\CharacterUpdates;
+
+use Xklusive\BattlenetApi\Services\WowService;
 
 class RiseCharacterUpdate extends Command
 {
@@ -42,7 +43,7 @@ class RiseCharacterUpdate extends Command
      *
      * @return mixed
      */
-    public function handle(RiseService $wow)
+    public function handle(WoWService $wow)
     {
         $users = User::all();
         $cacheOld = config('battlenet-api.cache');
@@ -55,7 +56,17 @@ class RiseCharacterUpdate extends Command
         foreach ($users as $user) {
             
             $bar->setMessage($user->name);
-            $wow->getProfileCharacters([], $user->bnet->access_token, $user->id);
+            $provider = $user->providers()->where('provider','battlenet')->first();
+            if (!empty($provider) && $provider->access_token) {
+                $response = $this->updateCharacters($user, $wow->getProfileCharacters([
+                    'access_token' => $provider->access_token,
+                    'access_scope' => $provider->scope,
+                    'user_id'      => $user->id
+                ]));
+
+                if (is_a($response, 'GuzzleHttp\Exception\ClientException')) { return ($response); }
+            }
+
             $bar->advance();
         }
         $bar->finish(); 
