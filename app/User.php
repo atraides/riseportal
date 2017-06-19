@@ -59,13 +59,17 @@ class User extends Authenticatable
 
     public function getGuildRank($readable = null)
     {
-        $char = $this->characters->sortBy('rank')->first();
-        if (!is_null($readable)) {
-            if (is_null($char)) { return 'guest'; }
+        $char = $this->characters->sortBy('rank');
+        if (!$char->isEmpty()) {
+            if (!is_null($readable)) {
+                if (is_null($char)) { return 'guest'; }
 
-            return snake_case($char->rank_name);
+                return snake_case($char->first()->rank_name);
+            } else {
+                return $char->first()->rank;
+            }
         } else {
-            return $char->rank;
+            return 10;
         }
     }
 
