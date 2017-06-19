@@ -60,20 +60,19 @@ class ApiController extends Controller
 
         if ($user->getGuildRank() >=6) {
             // Fuck all.
+        } else {
+            $votes = $user->votes->where('poll_id',$data['poll_id']);
+            if ($votes->isEmpty()) {
+                $user->votes()->create([
+                    'poll_id' => $data['poll_id'],
+                    'poll_options_id' => $data['id']
+                ]);
+            } else {
+                $votes->first()->update([
+                    'poll_options_id' => $data['id']
+                ]);
+            }
         }
-
-    	$votes = $user->votes->where('poll_id',$data['poll_id']);
-    	if ($votes->isEmpty()) {
-    		$user->votes()->create([
-    			'poll_id' => $data['poll_id'],
-    			'poll_options_id' => $data['id']
-    		]);
-    	} else {
-    		$votes->first()->update([
-    			'poll_options_id' => $data['id']
-    		]);
-    	}
-
     }
 
     public function pollDetails(Poll $poll) {
