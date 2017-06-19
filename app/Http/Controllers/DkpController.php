@@ -9,6 +9,16 @@ use Nathanmac\Utilities\Parser\Facades\Parser;
 
 class DkpController extends Controller
 {
+	/**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index() {
 	    $members = Member::orderBy('member_name', 'asc')->whereIn('member_rank_id', [0,1,5,6,8])->where('member_status',1)->get();
 

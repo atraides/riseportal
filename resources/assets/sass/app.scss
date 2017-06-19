@@ -6,4 +6,706 @@
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+//  Get the TTF fonts as well.
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard.woff") format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-bold.woff") format('woff');
+    font-style: normal;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-italic.woff") format('woff');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Blizzard";
+    src: url("./fonts/blizzard/blizzard-light.woff") format('woff');
+    font-weight: 100;
+}
+
+@mixin coloredBorder($r,$g,$b) {
+  border: 1px solid #000;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.3), inset 0 0 0 3px rgb($r,$g,$b), inset 0 0 0 4px #000, 0 0 10px rgba($r,$g,$b,.75);
+}
+
+html {
+    font-size: 16px;
+}
+
+.thin {
+    font-weight: 100;
+}
+
+.death_knight { color: #c41f3b; }
+.demon_hunter { color: #a330c9; }
+.druid { color: #ff7d0a; }
+.hunter { color: #abd473; }
+.mage  { color: #69ccf0; }
+.monk  { color: #00ff96; }
+.paladin  { color: #f58cba; }
+.priest   { color: #ffffff; }
+.rogue    { color: #fff569; }
+.shaman   { color: #0070de; }
+.warlock  { color: #9482c9; }
+.warrior  { color: #c79c6e; }
+
+nav .postingAs {
+    font-weight: 400;
+    > img {
+        height: 36px;
+        margin-left: 15px;
+        border: 1px solid #000;
+        vertical-align: middle;
+    }
+}
+
+.Author-name {
+    color: #fff;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+.Author-block {
+	box-sizing: border-box;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    font-family: Blizzard, sans-serif;
+    font-size: 17px;
+    height: 112px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    width: 280px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.Author {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.Author-avatar {
+    background-size: cover;
+    border: 1px solid #000;
+    position: relative;
+    height: 68px;
+    width: 68px;
+    @media only screen and (min-width: 641px) {
+    	height: 84px;
+    	width: 84px;
+    }
+    background-image: url(/storage/icons/avatar-default.png);
+}
+
+.Author-avatar img {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.Author-details {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-left: 1rem;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Author-achievements, .Author-class, .Author-guild {
+    font-size: .8125rem;
+    margin-top: 4px;
+    word-break: break-word;
+}
+
+*, :after, :before {
+    box-sizing: inherit;
+}
+
+.Author-achievements--link, .Author-guild--link {
+    color: rgba(255,255,255,.7)!important;
+}
+
+.Author-achievements--link .Icon, .Author-achievements--link .Navbar-modalContent .menu-content .menu-item .Icon-profileLink, .Author-achievements--link .User-menu .Icon-profileLink, .Author-guild--link .Icon, .Author-guild--link .Navbar-modalContent .menu-content .menu-item .Icon-profileLink, .Author-guild--link .User-menu .Icon-profileLink {
+    background-image: url(https://eu.battle.net/forums/static/images/icons/achievements.png);
+    height: 10px;
+    margin-right: 4px;
+    width: 8px;
+}
+
+.Author-avatar img {
+    height: 64px;
+    width: 64px;
+    @media only screen and (min-width: 641px) {
+        height: 84px;
+        width: 84px;
+    }
+    .officer &, .officer_alt &, .member &, 
+    .recruit &, .alt &, .casual &,
+    .inactive & 
+    { 
+      height: 58px;
+      width: 58px;
+      margin: 4px 0 0 4px;
+      @media only screen and (min-width: 641px) {
+
+        height: 76px;
+        width: 76px;
+      }
+    }
+}
+
+.Author-avatar {
+    .officer &, .officer_alt & { @include coloredBorder(0,180,255) }
+    .member &, .alt & { @include coloredBorder(129,181,88) }
+    .inactive & { @include coloredBorder(93, 93, 93) }
+}
+
+.Author-details .Author-job {
+    font-size: .8125rem;
+    margin-top: .25rem;
+}
+
+.Author-details .Author-job {
+    .officer &, .officer_alt & { color: rgb(0,180,255); }
+    .member &, .alt & { color: rgb(129,181,88); }
+    .casual &, .guild_friend & { color: rgb(226, 91, 42); }
+    .inactive & { color: rgb(93, 93, 93); }
+}
+
+.Icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.bi_battlenet, .bi_battlenet:hover, .bi_battlenet:focus {
+    background: url(/storage/icons/bnet.png) no-repeat 2px center;
+    padding-left: 30px !important;
+    margin-right: 3px;
+    margin-left: -3px;
+    text-decoration: none;
+    color: rgba(255,255,255,.7);
+}
+
+nav-text spa:nbootstrap hover, .bi_battlenet:hover {
+    color: rgba(255,255,255,1);
+    font-weight: 400;
+}
+
+.btn-battlenet {
+    background-color: #0e98d8 !important;
+    color: #fff;
+}
+
+html, body, #app {
+    height: 100%;
+}
+
+body {
+    background: url(/storage/BGs/background-bnet-top.jpg) center -200px no-repeat,url(/storage/BGs/background-bnet-repeat.jpg) center 1800px repeat-y #0d1e30;
+}
+
+.row {
+    border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.Dropdown-divider {
+    background: rgba(255,255,255,.1);
+    cursor: default;
+    height: 1px !important;
+    margin: .2rem 0;
+    padding: 0;
+    width: 100%;
+}
+
+.Characters {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media only screen and (min-width: 641px) {
+        padding: 1rem;
+    }
+}
+
+.Character .Author {
+    background-color: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.Character .Author:hover {
+    background-color: rgba(29, 34, 44, 0.63);
+    border-color: rgba(84, 84, 84, 0.8);
+}
+
+.Character .main, .Character .main:hover {
+    background-color: rgba(35,194,255,.1);
+    border-color: rgba(35,194,255,.5);
+}
+
+.Character .Author-realm {
+    color: rgba(255,255,255,.5);
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+.alert {
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.pre {
+    color: #cecece;
+    white-space: pre !important;
+}
+
+.bg-faded {
+   background-color: #272e3b;
+}
+
+.characterSelectModal.active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+.characterSelectModal {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+.characterSelectModal .characterSelectInner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 1040px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 682px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 550px;
+        max-height: 100%;
+    }
+}
+
+.Characters .Character {
+    @media only screen and (min-width: 641px) {
+        border-bottom: 1px solid transparent;
+        margin: 0 1.25rem 1.25rem 0;
+        width: calc((100% / 2) - 1.25rem);
+    }
+
+    @media only screen and (min-width: 961px) {
+       width: calc((100% / 3) - 1.25rem);
+    }
+}
+
+.characterSelectInner .Title {
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    font-size: 30px;
+    color: #fff;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 3.75rem;
+    font-weight: 100;
+    padding: 10px;
+}
+
+.characterSelectInner .load-more {
+    > a, a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+    background: rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    font-size: 1rem;
+    color: #fff;
+    height: 35px;
+    padding: 5px;
+}
+
+.animationload {
+    background-color: rgba(16,16,16,.85);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+.osahanloading {
+    animation: 1.5s linear 0s normal none infinite running osahanloading;
+    background: #80bd14 none repeat scroll 0 0;
+    border-radius: 50px;
+    height: 50px;
+    left: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: absolute;
+    top: 50%;
+    width: 50px;
+}
+.osahanloading:after {
+    animation: 1.5s linear 0s normal none infinite running osahanloading_after;
+    border-color: #242e2f transparent;
+    border-radius: 80px;
+    border-style: solid;
+    border-width: 10px;
+    content: "";
+    height: 80px;
+    left: -15px;
+    position: absolute;
+    top: -15px;
+    width: 80px;
+    box-sizing: border-box;
+}
+@keyframes osahanloading {
+0% {
+    transform: rotate(0deg);
+}
+50% {
+    background: #655a22 none repeat scroll 0 0;
+    transform: rotate(180deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+.title {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 100px);
+}
+
+.nav>li, {
+    position: relative;
+    display: flex;
+    padding: 0px 0px;
+    align-items: center;
+    height: 53px;
+}
+
+.nav>li>a {
+    display: flex;
+    padding: 0px 15px;
+    align-items: center;
+    height: 53px;
+    border-left: 1px solid #3d434f;
+    border-right: 1px solid #3d434f;
+}
+
+.navbar-inverse .navbar-nav .open a:hover, .navbar-inverse .navbar-nav .open a:focus, .navbar-inverse .navbar-nav .open a {
+    background-color: rgba(255,255,255,.15);
+    border-color: lighten(#3d434f,20%);
+}
+
+.navbar-nav li .dropdown-menu {
+    width: 100%;
+}
+
+#userDetailsModal .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#userDetailsModal .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 500px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#userDetailsModal .active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.characterMenu {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.characterMenu:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.loadingText {
+    color: rgba(255,255,255,.7);
+    position: absolute;
+    top: 58%;
+    width: 100%;
+    font-weight: 700;
+    align-items: center;
+    text-align: center;
+}
+
+#RLPVote .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#RLPVote .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 460px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#RLPVote .active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+#loginDetails .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#loginDetails .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 500px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#loginDetails .active {
+    display: flex;
+    display: -ms-flexbox;
+}
