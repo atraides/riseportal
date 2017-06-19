@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
 
         $poll2 = Poll::create([
             'name' => 'Legyen Decay?',
-            'infourl' => 'https://goo.gl/FgtZBm',
             'body' => 'Szavazzatok az általatok legjobbnak tartott opcióra legkésőbb<br/> <b>2017-06-24 19:00</b>-ig.'
         ]);
 

@@ -23,6 +23,7 @@ Route::delete('/user/{user}','Auth\OAuthProvidersController@deleteAccount');
 Route::get('/user/{user}','UsersController@show');
 Route::get('/user/{user}/new','UsersController@newUser')->name('newuser');
 Route::patch('/user/{user}','UsersController@update');
+Route::get('/battlenet', function () { return view('battlenet'); });
 
 
 Route::get('/guild', 'GuildController@show');

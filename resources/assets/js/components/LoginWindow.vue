@@ -1,5 +1,5 @@
 <template>
-<div id="userDetailsModal">
+<div id="loginDetails">
     <div :class="[{active: active},'modal-main']" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" @click="hide" aria-hidden="true">
         <div class="modal-inner" role="document"  @click.stop>
             <span class="title">Belépés</span>
