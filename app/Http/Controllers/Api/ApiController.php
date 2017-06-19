@@ -58,6 +58,10 @@ class ApiController extends Controller
     	$user = User::with('votes')->find(auth()->user()->id);
     	$data = $request->get('data');
 
+        if ($user->getGuildRank() >=6) {
+            // Fuck all.
+        }
+
     	$votes = $user->votes->where('poll_id',$data['poll_id']);
     	if ($votes->isEmpty()) {
     		$user->votes()->create([

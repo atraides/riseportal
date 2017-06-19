@@ -17,6 +17,7 @@
       window.App = {!! json_encode([
           'signedIn' => Auth::check(),
           'user_id' => Auth::check() ? Auth::user()->id : null,
+          'user_rank' => Auth::check() ? Auth::user()->getGuildRank() : null
       ]) !!};
     </script>
 </head>
