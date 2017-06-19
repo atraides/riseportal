@@ -15,43 +15,19 @@
 
     <script>
       window.App = {!! json_encode([
-          'signedIn' => Auth::check()
+          'signedIn' => Auth::check(),
+          'user_id' => Auth::check() ? Auth::user()->id : null,
       ]) !!};
     </script>
 </head>
 <body>
   <div id="app">
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-faded">
-  <span class="navbar-brand" href="#">
-    <img src="/storage/images/rise-text-small.png" height="40" class="d-inline-block align-middle" alt="">
-  </span>
-
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav my-auto mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <!-- Authentication Links -->
-    @if (Auth::guest())
-    <div class="navbar-text my-auto characterMenu">
-      <div class="p-1 mx-2 h-100">
-          Login with: <a class="bi_battlenet" href="{{ url('/oauth/battlenet') }}">Battle.net</a>
-      </div>
-    </div>
-    @else
-      <usermenu :data="{{ json_encode(['id' => auth()->user()->id]) }}"/>
-    @endif
-  </div>
-</nav>
-      
-    @yield('content')
+   <navbar></navbar>
+   @yield('content')
+   @if (Auth::check())
+    <rlpvote></rlpvote>
+    <characters :attributes={{ json_encode([]) }}></characters>
+  @endif
   </div>
 
 <!-- Scripts -->

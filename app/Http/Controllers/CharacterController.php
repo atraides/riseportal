@@ -8,16 +8,12 @@ use App\User;
 use App\Character;
 use DebugBar;
 
-use App\CharacterUpdates;
-
-use Illuminate\Http\Request;
 use Xklusive\BattlenetApi\Services\WowService;
 
-class CharacterController extends Controller
-{
+use Illuminate\Http\Request;
 
-    use CharacterUpdates;
-    
+class CharacterController extends Controller
+{    
     protected $characters = array();
     /**
      * Create a new controller instance.
@@ -34,45 +30,17 @@ class CharacterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('oauth-test');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function list(Request $request, WoWService $wow)
+    public function index(Request $request, WoWService $wow)
     {
         $user = User::with('characters')->find(auth()->user()->id);
-        $provider = $user->providers()->where('provider','battlenet')->first();
 
         $attributes = json_encode([ 
             'user_id' => auth()->user()->id,
             'no_modal' => true
         ]);
 
-        $response = $this->updateCharacters($user, $wow->getProfileCharacters([
-            'access_token' => $provider->access_token,
-            'access_scope' => $provider->scope
-        ]));
-
         if (request()->expectsJson()) {
-            if (is_a($response, 'GuzzleHttp\Exception\ClientException')) { return ((string) $response->getResponse()->getBody()); }
-
-            if ($request->query('showAll')) {
+            if (array_key_exists('showAll', $request->all())) {
                 $characters = $user->characters()->get();
             } else { 
                 $characters = $user->characters()
@@ -87,7 +55,18 @@ class CharacterController extends Controller
             return $characters;
         }
 
+            // return $user->characters()->get();
         return view('character', compact('attributes'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**

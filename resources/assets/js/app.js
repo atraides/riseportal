@@ -31,8 +31,10 @@ Vue.use(Vuelidate);
  */
 
 Vue.component('characters', require('./components/Characters.vue'));
-Vue.component('usermenu', require('./components/UserMenu.vue'));
 Vue.component('userdetails', require('./components/UserDetails.vue'));
+Vue.component('navbar', require('./components/NavBar.vue'));
+Vue.component('rlpvote', require('./components/RLPVote.vue'));
+Vue.component('login', require('./components/LoginWindow.vue'));
 
 Vue.component(
     'passport-clients',

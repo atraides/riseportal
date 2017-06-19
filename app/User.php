@@ -52,6 +52,11 @@ class User extends Authenticatable
         $this->save();
     }
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     public function getGuildRank($readable = null)
     {
         $char = $this->characters->sortBy('rank')->first();

@@ -206,7 +206,7 @@ nav .postingAs {
     background: url(/storage/icons/bnet.png) no-repeat 2px center;
     padding-left: 30px !important;
     margin-right: 3px;
-    margin-left: 10px;
+    margin-left: -3px;
     text-decoration: none;
     color: rgba(255,255,255,.7);
 }
@@ -570,4 +570,142 @@ body {
     font-weight: 700;
     align-items: center;
     text-align: center;
+}
+
+#RLPVote .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#RLPVote .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 460px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#RLPVote .active {
+    display: flex;
+    display: -ms-flexbox;
+}
+
+#loginDetails .modal-main {
+    align-items: center;
+    background-color: rgba(0,0,0,.7);
+    display: none;
+    height: 100%;
+    -ms-flex-pack: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    transition: background-color 250ms;
+    width: 100%;
+    z-index: 10000;
+    padding: 0px;
+}
+
+#loginDetails .modal-inner {
+    background-color: #1d222c;
+    border: 1px solid #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset, 0 5px 10px rgba(0,0,0,.5);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex: 1 1;
+    flex: 1 1;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    transform: translateY(0);
+    transition: transform .5s;
+    @media only screen and (min-width: 961px) {
+        -ms-flex: 0 1 auto;
+        flex: 0 1 auto;
+        min-width: 769px;
+    }
+    // @media only screen and (min-width: 1200px) {
+    //     min-width: 1040px;
+    // }
+    @media only screen and (min-width: 641px) {
+        height: 500px;
+        max-height: 100%;
+    }
+    > .title {
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        background: rgba(255,255,255,.05);
+        border-bottom: 1px solid rgba(255,255,255,.1);
+        font-size: 30px;
+        color: #fff;
+        display: -ms-flexbox;
+        display: flex;
+        min-height: 2rem;
+        max-height: 4rem;
+        font-weight: 100;
+        padding: 10px;
+    }
+    > div .message {
+        font-size: 1.10rem;
+        font-weight: 100;
+        color: rgba(255,255,255,.7);
+    }
+}
+
+#loginDetails .active {
+    display: flex;
+    display: -ms-flexbox;
 }

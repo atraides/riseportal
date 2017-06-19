@@ -187,7 +187,7 @@ class OAuthProvidersController extends Controller
      */
     public function handleLogin(Request $request)
     {
-        return redirect('/oauth/battlenet');
+        return view('login');
     }
 
     /**

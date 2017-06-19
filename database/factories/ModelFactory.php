@@ -25,6 +25,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\OauthProvider::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'user_id' => function () {
+            return factory('App\User')->create()->id;
+        },
+        'provider' => 'battlenet',
+        'access_token' => str_random(20),
+        'scope' => 'wow.profile',
+        'expires' => $faker->unixTime($max = 'now')
+    ];
+});
+
 $factory->define(App\Character::class, function (Faker\Generator $faker) {
     static $password;
 

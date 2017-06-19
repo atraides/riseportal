@@ -35,14 +35,17 @@
         components: { Character },
 
         created() {
-            this.startLoading();
             window.addEventListener('keydown', (e) => {
                 if (this.active && e.keyCode == 27) {
                     this.hide();
                 }
             });
+            if (this.signedIn && !_.includes(location.pathname,'new')) {
+                this.startLoading();
+            }
 
             window.events.$on('openCharacterChanger', this.show );
+            window.events.$on('updateCharacters', this.startLoading );
             window.events.$on('openLoadingScreen', this.showLoading );
             window.events.$on('closeLoadingScreen', this.hideLoading );
         },
@@ -58,13 +61,13 @@
         data() {
             return {
                 characters: this.data,
-                user_id: this.attributes.user_id,
                 modal: this.attributes.no_modal ? this.attributes.no_modal : false,
                 listAll: false,
                 buttonCss: ['btn', 'btn-primary'],
                 buttonText: "Processing Order",
                 active: false,
                 main: null,
+                signedIn: window.App.signedIn,
                 loading: false
             }
         },
@@ -77,14 +80,6 @@
                     return 'characterSelectModal';
                 }
             },
-            requestPage: function() {
-                console.log(`/user/${this.user_id}/characters`);
-                 if (!this.listAll && !this.modal) {
-                    return `/user/${this.user_id}/characters`;
-                } else {
-                    return `/user/${this.user_id}/characters?showAll=1`;
-                }
-            }
         },
 
         methods: {
@@ -110,16 +105,17 @@
 
             fetch(page) {
                 this.showLoading();
-                axios.get(this.url(page)).then(this.refresh);
+                axios.get(this.url(page))
+                .then(this.refresh)
             },
 
             url(page) {
-               return this.requestPage;
+                return page ? page : '/character';
             },
 
             getAllCharacters() {
                 this.listAll = true;
-                this.fetch();
+                this.fetch('/character/?showAll');
             },
 
             refresh({data}) {
@@ -139,13 +135,10 @@
                     this.characters = _.orderBy(data, ['main','lastModified'], ['desc','desc']);    
                 }
                 this.hideLoading();
-                events.$emit('openUserDetailsWindow');
-                // this.show();
             },
 
             changeMain(index) {
-                console.log(`${index} -- ${this.characters[0].main}`);
-
+                console.log(index);
                 if ((index != null && index != undefined) && (index != 0 || this.characters[0].main === false )) {
                     var old_main = _.find(this.characters, function(o) { return o.main === true; })
                     
@@ -156,7 +149,7 @@
                     this.characters[index].main = true;
                     this.characters = _.orderBy(this.characters, ['main','lastModified'], ['desc','desc']);
 
-                    if (this.attributes.new_user) {
+                    if (_.includes(location.pathname, 'new')) {
                         this.showLoading();
                         window.location = '/home'; 
                     } else {

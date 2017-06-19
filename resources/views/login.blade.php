@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-	<userdetails :attributes="{{ $attributes }}"></userdetails>
+	<login></login>
 </div>
 @endsection

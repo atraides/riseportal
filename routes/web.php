@@ -24,15 +24,15 @@ Route::get('/user/{user}','UsersController@show');
 Route::get('/user/{user}/new','UsersController@newUser')->name('newuser');
 Route::patch('/user/{user}','UsersController@update');
 
+
 Route::get('/guild', 'GuildController@show');
 Route::get('/guild/roster', 'GuildController@show');
 Route::get('/character', 'CharacterController@index');
-Route::get('/character/list', 'CharacterController@list');
+// Route::get('/character/list', 'CharacterController@list');
 Route::patch('/character/{character}', 'CharacterController@update');
-Route::get('/user/{user}/characters', 'CharacterController@list');
+// Route::get('/user/{user}/characters', 'CharacterController@list');
 
 // Route::get('/rlp', 'DkpController@index');
-// Route::get('/rlp/upload', function () { 
 // 	echo Form::open(array('url' => '/rlp/upload','files'=>'true'));
 //          echo 'Select the file to upload.';
 //          echo Form::file('raidlog');

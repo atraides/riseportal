@@ -21,13 +21,13 @@
 
         data() {
             return {
-                id: this.data.id
+                id: window.App.user_id
             }
         },
 
         methods: {
             changeChar() {
-                window.events.$emit('openCharacterChanger',this.data.thumbnail);
+                window.events.$emit('openCharacterChanger');
             },
 
             logout() {

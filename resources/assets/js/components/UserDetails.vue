@@ -2,12 +2,12 @@
 <div id="userDetailsModal">
     <div :class="[{active: active},'modal-main']" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
         <div class="modal-inner" role="document"  @click.stop>
-            <span class="title">Felhasználoi adatok</span>
+            <span class="title">Felhasználói adatok</span>
             <div class='text-center'>
-                <div class="message mx-15 p-4">Most elosszor jarsz nalunk ezert egy par adatot meg kell kerdezzunk. Kerlek toltsd ki az alabbi mezoket majd kattints a tovabb gombra.<br/>
+                <div class="message mx-15 p-4">Most először jársz nálunk ezért egy pár adatot meg kell kérdezzünk. Kérlek töltsd ki az alábbi mezőket majd kattints a tovább gombra.<br/>
                 <br/>
-                Koszonettel,<br/>
-                Rise Legacy
+                Köszonettel,<br/>
+                Rise Legacy Officer Team
                 </div>
 
                 <div class="mx-auto w-50 p-4">
@@ -81,27 +81,23 @@
         },
 
         created() {
-            // window.addEventListener('keydown', (e) => {
-            //     if (this.active && e.keyCode == 27) {
-            //         this.hide();
-            //     }
-            // });
-
-            window.events.$on('openUserDetailsWindow', this.show );
+            window.events.$emit('openLoadingScreen');
+            this.getInitialUserData();
         },
 
         data() {
             return {
-                active: false,
-                required: 'Ez a mezo kotelezo.',
-                validEmail: 'Ervenyes E-Mail cimet kell megadni.',
-                userAlreadyExists: 'Ez a felhasznalonev mar foglalt.',
-                emailAlreadyExists: 'Ez az E-Mail cim mar regisztralva van.',
+                active: true,
+                required: 'Ez a mező kötelező.',
+                validEmail: 'Érvényes E-Mail címet kell megadni.',
+                userAlreadyExists: 'Ez a felhasználónév már foglalt.',
+                emailAlreadyExists: 'Ez az E-Mail cím már regisztrálva van.',
+                user_id: this.attributes.user_id,
                 username: '',
-                btnDisabled: false,
                 email: '',
                 userUniq: null,
-                emailUniq: null
+                emailUniq: null,
+                btnDisabled: false
             }
         },
 
@@ -166,6 +162,22 @@
                     console.error(e);
                 })
             },
+
+            async getInitialUserData() {
+                axios.post(`/api/update/user/${this.user_id}/characters`)
+                .then(response => {
+                    if (response.status == 200) {
+                        console.info('Update was succesfull.');
+                        window.events.$emit('updateCharacters');
+                    } else {
+                        console.warn('Update failed.');
+                        console.info(response);
+                    }
+                })
+                .catch(e => {
+                   console.error(e);
+                })   
+            }
         }
     }
 </script>

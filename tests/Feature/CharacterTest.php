@@ -11,18 +11,31 @@ use App\Character;
 
 class CharacterTest extends TestCase
 {
-	use DatabaseMigrations;
+  use DatabaseMigrations;
     
     /** @test */
     function user_can_choose_a_main_character() {
-    	$user = create('App\User');
+      $user = create('App\User');
       $character = create('App\Character',['user_id' => $user->id]);
 
       $this->signIn($user);
 
-    	$this->json('PATCH', "/character/{$character->id}", ['main' => true])
-   			->assertStatus(200);
-    	$this->assertDatabaseHas('characters', ['id' =>  $character->id, 'main' => true]);
+      $this->json('PATCH', "/character/{$character->id}", ['main' => true])
+         ->assertStatus(200);
+      $this->assertDatabaseHas('characters', ['id' =>  $character->id, 'main' => true]);
+    }
+
+    /** @test */
+    function a_user_can_list_its_characters() {
+      $numCharacters = 50;
+      $user = create('App\User');
+      factory('App\Character',$numCharacters)->create(['user_id' => $user->id]);
+
+      $this->signIn($user);
+
+      $result = $this->json('GET', "/character", ['showAll' => 1]);
+      $result->assertStatus(200);
+      $this->assertCount($numCharacters, json_decode($result->content()));
     }
 
     /** @test */
