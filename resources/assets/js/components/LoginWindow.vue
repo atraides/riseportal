@@ -1,10 +1,10 @@
 <template>
-<div id="userDetailsModal">
+<div id="loginDetails">
     <div :class="[{active: active},'modal-main']" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" @click="hide" aria-hidden="true">
         <div class="modal-inner" role="document"  @click.stop>
             <span class="title">Belépés</span>
             <div class='text-center'>
-                <div class="message mx-15 p-4">Az általad kért oldal elérésehez be kell jelentkezned.<br/><br/> Ezt a lent talalhato <b>Battle.net</b> gombra kattintva tudod megtenni. Ha bõvebben érdekel miért változott meg a belépés menete akkor <a href="#!">ITT</a> utána olvashatsz.
+                <div class="message mx-15 p-4">Az általad kért oldal elérésehez be kell jelentkezned.<br/><br/> Ezt a lent talalhato <b>Battle.net</b> gombra kattintva tudod megtenni. Ha bõvebben érdekel miért változott meg a belépés menete akkor <a href="/battlenet">ITT</a> utána olvashatsz.
                 <br/><br/>
                 Köszonettel,<br/>
                 Rise Legacy Officer Team
