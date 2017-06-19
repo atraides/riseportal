@@ -1,6 +1,6 @@
 <template>
     <div class="message mx-auto mb-3 text-center">
-        <div v-if="infoUrl">Az egyes opciók részletes leírása <a :href="infoUrl">ITT!</a><br/></div>
+        <div v-if="infoUrl">Az egyes opciók részletes leírását <a :href="infoUrl">ITT</a> tekintheted meg.<br/></div>
         <div class="mt-2 text-success" v-if="(allowedPerc) >= 60">
             A szavazás érvényes.<br/>
             A szavazásra jogosult guildtagok {{ this.allowedPerc }}%-a szavazott.
