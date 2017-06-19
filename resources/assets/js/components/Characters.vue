@@ -96,11 +96,11 @@
             },
 
             showLoading() {
-                this.loading = true;
+                // this.loading = true;
             },
 
             hideLoading() {
-                this.loading = false;
+                // this.loading = false;
             },
 
             fetch(page) {
@@ -150,7 +150,8 @@
                     this.characters = _.orderBy(this.characters, ['main','lastModified'], ['desc','desc']);
 
                     if (_.includes(location.pathname, 'new')) {
-                        this.showLoading();
+                        // this.showLoading();
+                        this.loading = true;
                         window.location = '/home'; 
                     } else {
                         if (this.active) {

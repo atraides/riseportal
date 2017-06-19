@@ -34,7 +34,7 @@
                         <div class="form-control-feedback" v-else><small>&nbsp;</small></div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" :disabled="sendable ? 'disabled' : null" @click="submitUserData">Kuldés</button>
+                    <button type="submit" class="btn btn-primary w-75" :disabled="sendable ? 'disabled' : null" @click="submitUserData">{{ this.buttonText }}</button>
                 </div>
             </div>
         </div>
@@ -97,7 +97,8 @@
                 email: '',
                 userUniq: null,
                 emailUniq: null,
-                btnDisabled: false
+                btnDisabled: false,
+                buttonText: 'Küldés!'
             }
         },
 
@@ -164,11 +165,15 @@
             },
 
             async getInitialUserData() {
+                this.deactivateButton();
+                this.buttonText = 'Karaktereid Letöltése...';
                 axios.post(`/api/update/user/${this.user_id}/characters`)
                 .then(response => {
                     if (response.status == 200) {
                         console.info('Update was succesfull.');
                         window.events.$emit('updateCharacters');
+                        this.buttonText = 'Küldés!';
+                        this.activateButton();
                     } else {
                         console.warn('Update failed.');
                         console.info(response);

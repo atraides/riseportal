@@ -129,6 +129,7 @@ class OAuthProvidersController extends Controller
                 $user->providers()->delete();
                 $user->characters()->where('guild','!=','Rise Legacy')->delete();
                 $user->characters()->where('guild', null)->delete();
+                $user->votes()->delete();
                 $user->characters()->update(['user_id' => 1,'main' => false, 'lastModified' => 0]);
                 if ($user->delete()) {
                     $response = [
