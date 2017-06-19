@@ -19,7 +19,7 @@
                     </tr>
                 </table>
 
-                <div class="mx-auto w-75 mt-2">
+                <div class="mx-auto w-75 mt-2" v-if="userRank <= 5">
                         <button :class="['mx-2','w-25','btn',option.color]" v-for="(option, index) in options" @click="postVote(option)">{{ option.text }}</button>
                 </div>
             </div>
@@ -69,7 +69,8 @@
                 header: 'Header',
                 message: '',
                 voteId: 1,
-                allowed: 0
+                allowed: 0,
+                userRank: this.user_rank
             }
         },
 
