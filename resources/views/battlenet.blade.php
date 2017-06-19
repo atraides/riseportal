@@ -1,89 +1,91 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mx-auto mt-2 news w-75 text-justify">
-<h1 class="mt-5">Battle.net Bejelentkezes</h1>
+<div class="mx-auto mt-2 mb-5 news w-75 text-justify">
+<h1 class="mt-5">Battle.net Bejelentkezés</h1>
+ 
+A Guild honlap megújulásának egyik alapköve az új felhasználó kezelés. Amint azt már észre vehettétek a régi felhasználó név és jelszó kombináció eltűnt, helyét a Battle.net által nyújtott OAuth módszer vette át.
 
-A Guild honlap megujjulasanak egyik alapkove az uj felhasznalo kezeles. Amint azt mar eszre vehettetek a regi felhasznalonev es jelszo kombinacio eltunt es a helyet a Battle.net altal nyujtott OAuth modszer vette.
-
-<h2 class="mt-5">OAuth mi?? Borogasd majd elmulik!</h2>
-
+<h2 class="mt-5">OAuth mi?? Borogasd majd elmúlik!</h2>
+ 
 Az OAuth egy nyílt szabvány engedélyezési folyamatokra. Lehetővé teszi a felhasználók számára, hogy megosszák saját adataikat egy harmadik fél számára anélkül, hogy azonosítási adataikat kiadnák.
+ 
+Akit bővebben érdekel a téma <a href="https://hu.wikipedia.org/wiki/OAuth">ITT</a> utána olvashat a technikai részleteknek.
 
-Akit bovebben erdekel a tema <a href="https://hu.wikipedia.org/wiki/OAuth">ITT</a> utana olvashat bovebben.
+<h2 class="mt-5">Miért van erre szűkség</h2>
+ 
+A Guild életének természetes része hogy tagsága változik. Vannak akik sajnos már nem játszanak velünk, vannak új tagok, vannak a nagy visszatérők vagy akik épp szünetet tartanak. 
+ 
+Ideális esetben ezen változásokat a guild honlapja is tükrözi, elérhetővé teve ezáltal a szükséges információkat vagy éppen elrejtve azokat ha az illető annak megtekintésére már nem jogosult.
+ 
+Eddig ennek a karban tartása a vezetőség feladata volt, amit kézzel minden egyes felhasználóra külön kellett karbantartson. Ez egy eléggé sziszifuszi meló - nem is nagyon jeleskedtünk benne :) - ami a mai eszközökkel már nagyon könnyen és biztonságosan automatizálható. Megkönnyítve evvel a vezetőség munkáját és a látogatók életét.
+ 
+Erre a problémára kínál megoldást a Battle.net által biztosított OAuth engedélyezési folyamat.
 
-<h2 class="mt-5">Miert van erre szukseg</h2>
+<h2 class="mt-5">Mit jelent ez számotokra</h2>
+ 
+Innentől kezdve nem egy külön erre a célra fenntartott felhasználó névvel és jelszóval fogtok belépni az oldalra, hanem a Battle.net által biztosított authentikáció segítségével- természetesen az authentikátort is beleértve.
+ 
+Amennyiben hozzáférést biztosítasz a Guild számára hogy lássa a WoW profilodat akkor ahogy a Blizzard oldalán itt is látni fogod az összes karakteredet. Ezek közül pedig kiválaszthatod hogy melyik karakter jelenjen meg amikor például kommentálsz valamit.
+ 
+Az első belépés alkalmával a Blizzard meg fogja kérdezni milyen adatokhoz akarsz hozzáférést adni a guildnek. Ahogy a képen is látjátok ebből jelenleg kettő van - WoW profil, Starcraft profil -, az alap adatokhoz mindenféle képpen hozzáférést adsz. Akkor is ha esetleg az egyéb profilokat nem engedélyezed.
+ 
+A guild azon tagjaitól akik aktívan raidelnek velünk azt kérjük hogy a WoW profilhoz adjanak hozzáférést, mert ez alapján lesznek kezelve az esetleges szavazások és altos kérdések.
+ 
+Ha úgy gondolod hogy többet nem akarod ezeket az adatokat megosztani velünk természetesen ezt bármikor megteheted. Erről majd kicsit részletesebben később.
 
-A Guild eletenek termesztes resze hogy a tagok ossztetele valtozik. Vannak akik sajnos mar nem jatszanak velunk, vannak uj tagok, vannak a nagy visszaterok es termeszetesen akik epp szuntetet tartanak. 
+<h2 class="mt-5">Milyen adataim válnak így láthatóvá</h2>
 
-Idealis esetben ezen valtozasokat a guild honlapja is tukrozi, elerheto teve ezaltal a szukseges informaciokat vagy eppen elrejtve azokat ha az illeto annak megtekintesere mar nem jogosult.
-
-Eddig ennek a karbantartasa a Vezetoseg feladata volt, amit kezzel minden egyes felhasznalora kulon kelett karbantartson. Ez egy elegge sziszifuszi melo - nem is nagyon jeleskedtunk benne :) - ami a mai eszkozokkel mar nagyon konnyen es biztonsagosan automatizalhato. Megkonnyitve evvel a Vezetoseg munkalyat es a Latogatok elet.
-
-Erre a problemara kinal megoldast a Battle.net altal biztositott OAuth engedelyezesi folyamat.
-
-<h2 class="mt-5">Mit jelent ez szamotokra</h2>
-
-Innentol kezdve nem egy kulon erre a celra fenntartott felhasznalo nevvel es jelszoval fogtok belepni az oldalra, hanem a Blizzard oldalan az ottani adatokkal - termeszetesen az autentikatort is bele ertve.
-
-Amenyibben hozza ferest biztositasz a Guild szamara hogy lassa a WoW profilodat akkor ahogy a Blizzard oldalan itt is latni fogod az osszes karateredet. Ezek kozul pedig kivalaszthatod hogy melyik karakter jelenjen meg amikor peldaul kommentelsz valamit.
-
-Az elso belepes alkalmaval a Blizzard meg fogja kerdezni milyen adatokhoz akarsz hozzaferest adni a guildnek. Ahogy akepen is latjatok ebbol jelenleg kett van - WoW profil, Starcraft profil -, az alap adatokhoz mindenfele keppen hozza ferest adsz. Akkor is ha esetleg az egyeb profilokat nem engedelyezed.
-
-A guild azon tagjaitol akik aktivan raidelnek velunk azt kerjuk hogy a WoW profilhoz adjanak hozzaferest, mert ez alapjan lesznek kezelve az esetleges szavazasok es altos kerdesek.
-
-Ha ugy gondolod hogy tobbet nem akarod ezeket az adatokat megosztani veelunk termeszetesen ezt barmikor meg teheted. Errol majd kicsit reszletesebben kesobb.
-
-<h2 class="mt-5">Milyen adataim valnak igy lathatova</h2>
-
-<h3 class="mt-5">A Battle.net felhasznalomrol</h3>
-
-A Battle.net felszahanalokrol a Blizzard minimalis mennyisegu adatot szolgaltat ki. Tulajdonkeppen egy ID-n es a BattleTag-en kivul semmi mast. A lenti peldaban lathatjatok pontosan milyen adatokat is adnak ki:
+<h2 class="mt-5">a Battle.net felhasználómról</h2>
+ 
+A Battle.net felhasználókról a Blizzard minimális mennyiségű adatot szolgáltat ki. Tulajdonképpen egy ID-n és a BattleTag-en kivül semmi mást. A lenti példában láthatjátok pontosan milyen adatokat is adnak ki:
 {
     "id": 18***05,
     "battletag": "At*****s#2**4"
 }
+ 
+id: Ez az ID a Blizzard rendszerében azonosít téged és lehetővé teszi számunkra hogy meggyőződjünk róla hogy te tényleg az vagy akinek mondod magad.
+battletag: Ezt azt hiszem senkinek nem kell bemutatni. A Battle.net-es friendek közé lehet vele valakit felvenni. Ezt az információt mindenképpen megosztja a Blizzard, de jelenleg mi nem tároljuk el.
 
-id: Ez az ID a blizzard rendszereben azonist teged es lehetove teszi szamunkra hogy meggyozodjunk rola hogy te telleg az vagy akinek mondod magad.
-battletag: Ezt asszem senkinek nem kell bemutatni. A Battle.net-es friendek koze lehet vele valakit felvenni. Ezt az informaciot mindenkeppen megosztja a Blizzard, de jelenleg mi nem taroljuk el.
-
-<h3 class="mt-5">A WoW profilomrol</h3>
-
-A World of Warcraft profilban a karaktereiddel kapcsolatos publikus informaciokat osztja meg a Blizzard. Mint peldaul a Karakter neve, szintje, faja, stb. Ezek mind olyan adatok amik barki szamara elerhetok az Armoryn.
-
-Az egyetlen plussz informacio amihez ezaltal hozza jutunk az a karater viszonya a tobbi karakterhez. Tehat tudni fogjuk hogy XYZ az Joskapista altja.
-
-Akit erdekel bovebben itt van egy komplett pelda egy felhasznalo karaktereirol:
+<h3 class="mt-5">A WoW profilomról</h3>
+ 
+A World of Warcraft profilban a karaktereiddel kapcsolatos publikus információkat osztja meg a Blizzard. Mint például a Karakter neve, szintje, faja, stb. Ezek mind olyan adatok amik bárki számára elérhetőek az Armoryn.
+ 
+Az egyetlen plusz információ amihez ezáltal hozzá jutunk az a karater viszonya a többi karakterhez. Tehát tudni fogjuk hogy XYZ az ABC altja.
+ 
+Akit érdekel bővebben itt van egy komplett példa egy felhasználó karaktereiről:
 <a href="https://codebeautify.org/jsonviewer/cb002f8f">https://codebeautify.org/jsonviewer/cb002f8f</a>
 
 <h3 class="mt-5">A Starcraft profilomrol</h3>
+ 
+A Stracraft profilban a játékkal kapcsolatos achievementek, kapmány információk és értelemszerűen a kompetitív statisztikák találhatóak.
+ 
+Ha gondolod megoszthatod velünk, de jelenleg semmit nem használunk ezekből.
 
-A Stracraft profilban a jatekkal kapcsolatos achievementek, kapmany informaciok es ertelemszeruen a kompetitiv statisztikak talalhatok.
-
-Ha gondolod megoszthatod velunk, de jelenleg semmit nem hasznalunk ezekbol.
 <h2 class="mt-5">Hogyan tudom ezt visszavonni</h2>
+ 
+Ezen jogosultságok visszavonása nagyon egyszerű. Szimplán be kell lépni a <a href="https://eu.battle.net/account/management/">Battle.net oldalra</a> és megkeresni a <b>Security Options > Authorized Applications</b> menüpontot.
+ 
+Itt láthatható az összes olyan alkalmazás ami hozzáférhet a Battle.net adataidhoz. A listából ki kell keresni a Rise Legacy Portalt és a Remove gombbal vissza vonni a jogosultságot.
+ 
+A jogosultság visszavonása után még eltelhet 3-5 perc mire a rendszer ténylegesen vissza vonja a jogosultságot.
+ 
+Addig is a Guild oldalán a Karakter menüben az Account Törlése opciót választva érdemes minden adatot kitörölni a mi adatbázisunkból is. Ez automatikusan is meg fog történni 1-2 napon belül, de fő a biztonság.
+ 
+Nem áll szándékunkban semmilyen olyan adatot tárolni amit annak tulajdonosa nem akar veluük megosztani.
 
-Ezen jogosultsagok visszavonasa nagyon egyszeru. Szimplan be kell lepni a <a href="https://eu.battle.net/account/management/">Battle.net oldalra</a> es megkeresni a Security Options > Authorized Applications menupontot.
-
-Itt lathathato az osszes olyan alkalmazas akik hozzaferhetnek a Battle.net adataidhoz. A listabol ki kell keresni a Rise Legacy Portalt es a Remove gombbal vissza vonni a jogosultsagot.
-
-A jogosultsag visszavonasa utan meg eltelhet 3-5 perc mire a rendszer tenylegesen vissza vonja a jogosultsagot.
-
-Addig is a Guild oldalan a Karakter menuben az Account Torlese opciot valasztva erdemes minden adatot kitorolni a mi adatbazisunkbol is. Ez automatikusan is meg fog tortenik 1-2 napon belul, de fo a biztonsag.
-
-Nem all szandekunkban semmilyen olyan adatot tarolni amit annak tulajdonosa nem akar velunk megosztani.
 <h2 class="mt-5">FAQ</h2>
 
-<h3 class="mt-5">Evval barki mas hozza ferhet a wow accountomhoz</h3>
+<h3 class="mt-5">Evvel bárki más hozzá férhet a wow accountomhoz?</h3>
+ 
+Nem a WoW és bármi más accountodhoz továbbra is - remélhetőleg - csak te férhetsz hozzá. A Blizzard semmi olyan adatot nem oszt meg velünk amivel be tudnánk lépni az accountodra.
 
-Nem a WoW es barmi mas accountodhoz tovabbra is - remelhetoleg - csak te ferhersz hozza. A Blizzard semmi olyan adatot nem oszt meg velunk amivel be tudnank lepni az accountodra.
+<h3 class="mt-5">Láthatja bárki a bankkártya adataimat/paypal useremet</h3>
+ 
+Nem. A Blizzard semmi ilyesmi információt nem oszt meg.
 
-<h3 class="mt-5">Lathatja barki a bankkartya adataimat/paypal useremet</h3>
+<h3 class="mt-5">Láthatja bárki az email címemet?</h3>
+Nem. A Blizzard nem teszi lehetővé semmilyen módon hogy a regisztrált profilodhoz tartozó emailt megszerezzük - természetesen nem is vagyunk rá kíváncsiak :)
 
-Termesztesen nem. A Blizzard semmi ilyesmi informaciot nem oszt meg.
-
-<h3 class="mt-5">Lathatja barki az email cimemet?</h3>
-
-Nem. A Blizzard nem teszi lehetove semmilyen modon hogy a regisztralt profilodhoz tartozo emailt megszerezzuk - termesztesen nem is vagyunk ra kivancsiak. :)
 </div>
 @endsection
