@@ -7,8 +7,6 @@ use Carbon\Carbon;
 use App\User;
 use DebugBar;
 
-use App\CharacterUpdates;
-
 use Illuminate\Http\Request;
 
 use Xklusive\BattlenetApi\Services\RiseService;
@@ -17,8 +15,6 @@ use Illuminate\Support\Facades\Cache;
 class HomeController extends Controller
 {
 
-  use CharacterUpdates;
-  
   protected $characters = array();
     /**
      * Create a new controller instance.

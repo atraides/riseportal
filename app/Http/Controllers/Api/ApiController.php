@@ -77,7 +77,8 @@ class ApiController extends Controller
 
     public function pollDetails(Poll $poll) {
         $allowedToVote = Character::whereIn('rank',[1,5])->count();
-        return response()->json([
+
+        $response = [
             'status' => 200, 
             'statusText' => 'OK',
             'data' => [
@@ -87,6 +88,15 @@ class ApiController extends Controller
                 'infourl' => $poll->infourl,
                 'name' => $poll->name
             ]
-        ],200);
+        ];
+
+        if (auth()->check()) {
+            $user = User::find(auth()->user()->id);
+            $votes = $user->votes->where('poll_id',$poll->id);
+            if (!$votes->isEmpty()) {
+                $response['data']['my_vote'] = $votes->first()->poll_options_id;
+            }
+        }
+        return response()->json($response,200);
     }
 }

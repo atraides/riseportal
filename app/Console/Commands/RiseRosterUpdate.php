@@ -70,7 +70,7 @@ class RiseRosterUpdate extends Command
                 // Character belongs to the Dummy account, lets update it.
                 $character->first()->update((array) $character);
             } else {
-                // Character belongs to someone else. Do not do anything.
+                // Character belongs to someone else. Only update the guild rank.
             }
 
             $bar->advance();

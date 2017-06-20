@@ -3,7 +3,6 @@
     <div :class="[{active: active},'modal-main']" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" @click="hide" aria-hidden="true">
         <div class="modal-inner" role="document"  @click.stop>
             <span class="title">{{ this.header }}</span>
-            <transition name="slide-fade">
             <div class='text-center'>
                 <div class="text-center message mx-15 p-4" v-html="message"></div>
                 <votevalidity :attributes="validity"></votevalidity>
@@ -20,10 +19,9 @@
                 </table>
 
                 <div class="mx-auto w-75 mt-4" v-if="userRank <= 5">
-                        <button :class="['mx-2','w-25','btn',option.color]" v-for="(option, index) in options" @click="postVote(option)">{{ option.text }}</button>
+                        <button type="button" role="button" :class="optionsButtonCss(option)" v-for="(option, index) in options" @click="postVote(option)">{{ option.text }}</button>
                 </div>
             </div>
-            </transition>
 
             <div class="carousel-control-prev" role="button" @click="prevSlide">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -67,6 +65,7 @@
                 active: false,
                 options: this.data,
                 header: 'Header',
+                myVote: 0,
                 message: '',
                 voteId: 1,
                 allowed: 0,
@@ -98,6 +97,18 @@
                 return `height: 4px; width: ${optionPercent}%;`;
             },
 
+            optionsButtonCss(option) {
+                var baseCss = ['mx-2','w-25','btn'];
+                if (option) {
+                    if (this.myVote == option.id){
+                        baseCss.push('disabled');
+                    } else {
+                        baseCss.push(_.replace(option.color,'bg','btn'));
+                    }
+                }
+                return _.join(baseCss, ' ');
+            },
+
             postVote(option) {
                 axios.post('/api/vote', {
                     'data': option
@@ -124,6 +135,7 @@
                 this.allowed = data.data.allowedToVote;
                 this.message = data.data.message;
                 this.header = data.data.name;
+                this.myVote = data.data.my_vote;
                 this.validity = {
                     'allowed': this.allowed,
                     'votesTotal': this.votesTotal,
