@@ -21,7 +21,7 @@ $border-radius-sm:       0px !default;
 $navbar-padding-y:                  0px !default;
 $navbar-brand-padding-y:            0px !default;
 
-$dropdown-bg:                    #272e3b !default;
+$dropdown-bg:                    #0e1306 !default;
 
 //** Dropdown link text color.
 $dropdown-link-color:            rgba(255,255,255,.7) !default;
@@ -32,3 +32,5 @@ $dropdown-link-hover-bg:         #323945 !default;
 
 //** Dropdown menu `border-color`.
 $dropdown-border-color:                rgb(61,67,79) !default;
+
+$modal-inner-bg: #080f06 !default;
